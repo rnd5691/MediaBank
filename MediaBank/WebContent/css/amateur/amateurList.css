@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+html, body	{
+	height: 100%;
+}
+
+.allbody	{
+	
+	width:100%;
+	height: auto;
+	min-height: 100%;
+}
+
+.amatitle	{
+	width: 1200px;
+	height: auto;
+	margin: 0 auto;
+	color: #83b14e;
+	border-bottom: 1px solid #747474;
+}
+
+h1	{
+	display: inline-block;
+}
+
+h4	{
+	display: inline-block;
+}
+
+.amasearch	{
+	margin-top: 50px;
+	margin-left: 220px;
+}
+
+.amasearch > input	{
+	height: 34px;
+}
+
+.amacontainer	{
+	margin-top: 50px;
+}
+
+.piece	{
+	width: 250px;
+	height: 250px;
+	border: 1px solid black;
+	margin-right: 48px;
+	margin-top: 30px;
+}
+
+.tdtable1	{
+	padding-top: 15px;
+	padding-left: 15px;
+	
+}
+
+#tdtable1	{
+	margin-left: 15px;
+}
+
+.table1	{
+	margin-bottom: 20px;
+}
+
+.select	{
+	height: 34px;
+}
+
+#table2	{
+	margin-bottom: 80px;
+}
+
+#table3	{
+	margin-bottom: 80px;
+}
