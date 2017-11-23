@@ -101,7 +101,7 @@
 						$("#select-video").prop("selected", true);
 						count++;
 					} else {
-						$(".flex-image").append("<div class='item item"+count+"'><img id=img"+count+"><div>");
+						$(".flex-image").append("<div class='item item"+count+"'><a href='"+hit.pageURL+"'><img id=img"+count+"></a></div>");
 						var re = hit.webformatURL.indexOf('_');
 						var lstr = hit.webformatURL.lastIndexOf('.');
 						var lstr2 = hit.webformatURL.lastIndexOf('_');//_640.jpg
@@ -204,7 +204,7 @@
 	}
 </style>
 </head>
-<body>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 	<c:import url="${pagecontext.request.contextpath}/WEB-INF/view/temp/header.jsp"></c:import>
 	<div class="body">
 		<div class="search_con">
@@ -242,8 +242,8 @@
       				<a href="searchView.search?work_seq=${author.work_seq}"><img src="${pageContext.request.contextPath}/upload/${author.file_name}"></a>
       			</c:if>
       			<c:if test="${author.file_kind eq 'video' }">		
- -      			<video src="${pageContext.request.contextPath}/upload/${author.file_name}" width="280" height="180" controls="controls"></video>		
- -      		</c:if>
+       			<video src="${pageContext.request.contextPath}/upload/${author.file_name}" width="280" height="180" controls="controls"></video>		
+       		</c:if>
       		</div>
       	</c:forEach>
 	   </div>

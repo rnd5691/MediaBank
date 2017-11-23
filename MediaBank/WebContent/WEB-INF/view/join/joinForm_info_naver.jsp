@@ -18,7 +18,7 @@
 		$("#add").load('memberTable.member?kind='+'${sessionScope.naver.kind}');
 	});
 </script>
-<body>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 <c:import url="../temp/header.jsp"></c:import>
 <!-- Contents -->
 <section class="body">

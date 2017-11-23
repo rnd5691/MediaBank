@@ -40,7 +40,7 @@
 
 <!-- contents start -->
 <c:if test="${!empty requestScope.qna }">
-<body>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 <div class="body">
 	<div class="qnaTitle">
 		<h1><a href="qnaList.qna">Q&A</a></h1> <h4>View</h4>

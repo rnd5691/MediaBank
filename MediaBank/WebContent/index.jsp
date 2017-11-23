@@ -76,10 +76,12 @@ $(function() {
 			console.log('No hits');
 		}
 	});
+	
+	
 });
 </script>
 </head>
-<body>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 <!-- header start -->
 <c:import url="./WEB-INF/view/temp/header.jsp"></c:import>
 <!-- header finish -->

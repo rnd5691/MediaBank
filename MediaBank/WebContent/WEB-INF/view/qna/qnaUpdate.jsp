@@ -14,7 +14,7 @@
 <link href="../css/header.css" rel="stylesheet">
 <link href="../css/qna/qnaWrite.css" rel="stylesheet">
 </head>
-<body>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 <!-- header start -->
 <c:import url="../temp/header.jsp"></c:import>
 <!-- header finish -->

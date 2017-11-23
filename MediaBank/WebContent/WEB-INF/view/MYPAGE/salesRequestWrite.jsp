@@ -16,14 +16,21 @@
 	$(function(){
 		$("#salesRequestList").css('color', 'white');
 		$("#salesRequestList").css('background-color', '#83b14e');
-		
+		var check = true;
 		$("#file").change(function(){
 			if($(this).val() != ""){
 				var file = this.files[0]; // files 를 사용하면 파일의 정보를 알 수 있음
 				// file 은 배열 형태이므로 file[0] 처럼 접근해야함
 				var _URL = window.URL || window.webkitURL;
 				var img = new Image();
-					
+				var maxSize = 1024*1024*10;
+				if(file.size>maxSize){
+					alert("업로드는 10MB까지 가능합니다");
+					check = false;
+				} else {
+					check = true;
+				}
+				
 				img.src = _URL.createObjectURL(file);
 				img.onload = function(){
 				 	$("#fileWidth").val(img.naturalWidth);
@@ -31,10 +38,19 @@
 				}
 			}
 		});
+		
+		$("#btn").click(function(){
+			if(check==false){
+				alert("업로드용량이 초과 되었습니다");
+			} else {
+				$("#frm").submit();
+			}
+		});
+		
 	});
 </script>
 </head>
-<body>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 <!-- header start -->
 <c:import url="../temp/header.jsp"></c:import>
 <!-- header finish -->
@@ -46,7 +62,7 @@
 		<div class="title">
 			<h1>My Page</h1>&nbsp;&nbsp;<h5>내 작품 판매승인 요청 작성</h5>
 		</div>
-		<form action="mypageSalesRequestWrite.mypage" method="post" enctype="multipart/form-data">
+		<form action="mypageSalesRequestWrite.mypage" id="frm" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="nickname" value="${requestScope.nickname}">
 			<table class="table table-hover">
 				<tr>
@@ -73,7 +89,7 @@
 				</tr>
 			</table>
 			<div class="button">
-				<button class="btn btn-default">등록</button>
+				<input type="button" id="btn" class="btn btn-default" value="등록">
 			</div>
 		</form>
 	</div>

@@ -13,7 +13,7 @@
 <link href="../css/header.css" rel="stylesheet">
 <link href="../css/qna/qnaList.css" rel="stylesheet">
 </head>
-<body>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 <!-- header start -->
 <c:if test="${sessionScope.member.kind ne 'admin'}">
 	<c:import url="../temp/header.jsp"></c:import>
