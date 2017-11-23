@@ -87,15 +87,15 @@ h4	{
 #btn_video	{
 	width: 140px;
 	float: right;
+	margin-right: 12%;
+	margin-bottom: 5%;
 }
 
 #btn_image	{
 	width: 140px;
 	float: right;
-}
-
-.pagination > a	{
-	vertical-align: center;
+	margin-right: 12%;
+	margin-bottom: 5%;
 }
 
 .tab-content	{
@@ -104,8 +104,19 @@ h4	{
 
 .nav-tabs	{
 	width: 700px;
+	z-index: 0;
 }
 
 .container	{
 	width: 700px;
+}
+
+.pagination	{
+	display: block;
+	text-align: center;
+}
+
+.pagination > li > a	{
+	float: none;
+	margin-left: -5px;
 }

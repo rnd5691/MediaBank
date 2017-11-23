@@ -43,9 +43,9 @@ public class SalesRequestNowService implements Action {
 			fileDTO = new FileDTO();
 			fileDAO = new FileDAO();
 			totalCount = fileDAO.getTotalCount(user_num, file_kind);
-			PageMaker pageMaker = new PageMaker(curPage, totalCount);
-			imageAr = fileDAO.selectNow(user_num, file_kind);
-			videoAr = fileDAO.selectNow2(user_num, file_kind);
+			PageMaker pageMaker = new PageMaker(curPage, 12, totalCount);
+			imageAr = fileDAO.selectNow(user_num, file_kind, pageMaker.getMakeRow());
+			videoAr = fileDAO.selectNow2(user_num, file_kind, pageMaker.getMakeRow());
 			
 			request.setAttribute("file", imageAr);
 			request.setAttribute("video", videoAr);

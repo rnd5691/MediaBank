@@ -171,6 +171,23 @@ $(function(){
 		</c:if>
 		</c:forEach>
 		</table>
+		<c:if test="${makePage.totalPage>0 }">
+		<div class="paging">
+			<ul class="pagination">
+				<c:if test="${makePage.curBlock>1}">
+					<li><a href="./mypageSalesRequestNow.mypage?curPage=1&user_num=${member.user_num}&file_kind=${file_kind}">&lt;&lt;</a></li>
+					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.startNum-1}&user_num=${member.user_num}&file_kind=${file_kind}">[이전]</a></li>
+				</c:if>
+				<c:forEach begin="${makePage.startNum}" end="${makePage.lastNum}" var="i">
+					<li><a href="./mypageSalesRequestNow.mypage?curPage=${i}&user_num=${member.user_num}&file_kind=${file_kind}">${i}</a></li>
+				</c:forEach>
+				<c:if test="${makePage.curBlock<makePage.totalBlock}">
+					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.lastNum+1}&user_num=${member.user_num}&file_kind=${file_kind}">[다음]</a></li>
+					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.totalPage}&user_num=${member.user_num}&file_kind=${file_kind}">&gt;&gt;</a></li>
+				</c:if>
+			</ul>
+		</div>
+	</c:if>
 		<button type="button" class="btn btn-default" id="btn_image">저장</button>	
     </div>
     <div id="video" class="tab-pane fade">
@@ -188,13 +205,7 @@ $(function(){
 		</c:if>
     </c:forEach>
 		</table>
-    <button type="button" class="btn btn-default" id="btn_video">저장</button>	
-    </div>
-    
-  </div>
-</div>
-			
-	<c:if test="${makePage.totalPage>0 }">
+		<c:if test="${makePage.totalPage>0}">
 		<div class="paging">
 			<ul class="pagination">
 				<c:if test="${makePage.curBlock>1}">
@@ -211,7 +222,13 @@ $(function(){
 			</ul>
 		</div>
 	</c:if>
-			</div>
+    <button type="button" class="btn btn-default" id="btn_video">저장</button>	
+    </div>
+    
+  </div>
+</div>
+			
+</div>
 		</div>
 </form>
 <div class="push"></div>
