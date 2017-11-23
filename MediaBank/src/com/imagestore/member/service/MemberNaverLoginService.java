@@ -28,7 +28,7 @@ public class MemberNaverLoginService implements Action {
 		String redirectURI=null;
 		String apiURL=null;
 		try {
-			redirectURI = URLEncoder.encode("http://localhost/MediaBank3/member/memberNaverCallback.member","UTF-8");
+			redirectURI = URLEncoder.encode("http://localhost/MediaBank/member/memberNaverCallback.member","UTF-8");
 			//애플리케이션을 등록시 입력한 Callback URL 값. URL 인코딩을 적용.
 			apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
 			//response_type : 인증 과정에 대한 내부 구분값. code 로 전송해야 함.
