@@ -31,6 +31,7 @@
 				</c:choose>
 			</ul>
 		</div>
+		
 	</header>
 	<!-- Modal -->
 					  <div class="modal fade" id="myModal" role="dialog">
@@ -53,8 +54,8 @@
 						        </div>
 						        <div class="modal-footer">
 						        	<a href="${pageContext.request.contextPath}/member/memberNaverLogin.member"><img class="naver_login" src="${pageContext.request.contextPath}/images/naver_login.PNG"></a>
-						        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						        	<button class="btn btn-default">Login</button>
+						        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						        </div>						   
 						    </form>
 					      </div>

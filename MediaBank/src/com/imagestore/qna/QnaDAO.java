@@ -83,11 +83,7 @@ public class QnaDAO {
 			qnaDTO = new QnaDTO();
 			qnaDTO.setQna_seq(rs.getInt("qna_seq"));
 			qnaDTO.setTitle(rs.getString("title"));
-			if(kind.equals("company")){
-				qnaDTO.setWriter(memberDAO.searchCompanyName(user_num));
-			}else{
-				qnaDTO.setWriter(memberDAO.searchNickName(user_num));
-			}
+			qnaDTO.setWriter(memberDAO.searchNickName(user_num, kind));
 			qnaDTO.setContents(rs.getString("contents"));
 			qnaDTO.setReg_date(rs.getDate("reg_date"));
 			qnaDTO.setReply_check(rs.getString("reply_check"));
@@ -119,11 +115,7 @@ public class QnaDAO {
 			QnaDTO qnaDTO = new QnaDTO();
 			qnaDTO.setQna_seq(rs.getInt("qna_seq"));
 			qnaDTO.setTitle(rs.getString("title"));
-			if(member_kind.equals("company")){
-				qnaDTO.setWriter(memberDAO.searchCompanyName(user_num));
-			}else{
-				qnaDTO.setWriter(memberDAO.searchNickName(user_num));
-			}
+			qnaDTO.setWriter(memberDAO.searchNickName(user_num, member_kind));
 			qnaDTO.setContents(rs.getString("contents"));
 			qnaDTO.setReg_date(rs.getDate("reg_date"));
 			qnaDTO.setReply_check(rs.getString("reply_check"));
@@ -158,11 +150,7 @@ public class QnaDAO {
 			QnaDTO qnaDTO = new QnaDTO();
 			qnaDTO.setQna_seq(rs.getInt("qna_seq"));
 			qnaDTO.setTitle(rs.getString("title"));
-			if(member_kind.equals("company")){
-				qnaDTO.setWriter(memberDAO.searchCompanyName(user_num));
-			}else{
-				qnaDTO.setWriter(memberDAO.searchNickName(user_num));
-			}
+			qnaDTO.setWriter(memberDAO.searchNickName(user_num, member_kind));
 			qnaDTO.setContents(rs.getString("contents"));
 			qnaDTO.setReg_date(rs.getDate("reg_date"));
 			qnaDTO.setReply_check(rs.getString("reply_check"));

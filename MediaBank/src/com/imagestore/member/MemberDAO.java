@@ -27,7 +27,7 @@ public class MemberDAO {
 		
 		return kind;
 	}
-	//회사명 구하기
+	/*//회사명 구하기
 	public String searchCompanyName(int user_num) throws Exception{
 		Connection con = DBConnector.getConnect();
 		String sql = "select company_name from company where user_num=?";
@@ -43,18 +43,28 @@ public class MemberDAO {
 		DBConnector.disConnect(rs, st, con);
 		
 		return company_name;
-	}
+	}*/
 	//닉네임 구하기
-	public String searchNickName(int user_num) throws Exception{
+	public String searchNickName(int user_num, String member_kind) throws Exception{
+		
 		Connection con = DBConnector.getConnect();
-		String sql = "select nickname from person where user_num=?";
+		String sql = null;
+		if(member_kind.equals("company")) {
+			sql = "select company_name from "+member_kind+" where user_num=?";
+		}else {
+			sql = "select nickname from "+member_kind+" where user_num=?";			
+		}
 		PreparedStatement st = con.prepareStatement(sql);
 		st.setInt(1, user_num);
 		
 		ResultSet rs = st.executeQuery();
 		String nickname = null;
 		if(rs.next()){
-			nickname = rs.getString("nickname");
+			if(member_kind.equals("company")) {
+				nickname = rs.getString("company_name");
+			}else {				
+				nickname = rs.getString("nickname");
+			}
 		}
 		
 		DBConnector.disConnect(rs, st, con);

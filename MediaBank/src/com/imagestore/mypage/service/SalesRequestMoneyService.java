@@ -21,43 +21,50 @@ public class SalesRequestMoneyService implements Action {
 		ActionFoward actionFoward = new ActionFoward();
 		HttpSession session = request.getSession();
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-		WorkDAO workDAO = new WorkDAO();
-		
-		int curPage=1;
-		
-		try {
-			curPage = Integer.parseInt(request.getParameter("curPage"));
+		if(memberDTO == null) {
+			request.setAttribute("message", "잘못된 접근 방식 입니다.");
+			request.setAttribute("path", "../index.jsp");
+			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+			actionFoward.setCheck(true);
+		}else {
+			WorkDAO workDAO = new WorkDAO();
 			
+			int curPage=1;
 			
-		} catch (Exception e) {
-		
-			curPage=1;
+			try {
+				curPage = Integer.parseInt(request.getParameter("curPage"));
+				
+				
+			} catch (Exception e) {
+				
+				curPage=1;
+			}
+			
+			int totalCount = 0;
+			int user_num;
+			int workTotalCount = 0;
+			int totalMoney = 0;
+			try {
+				user_num = memberDTO.getUser_num();
+				
+				totalCount = workDAO.getTotalCount(user_num, "승인");
+				
+				workTotalCount = workDAO.workTotalCount(user_num);
+				
+				PageMaker pageMaker = new PageMaker(curPage, totalCount);
+				
+				List<WorkDTO> ar = workDAO.MoneySelectList(memberDTO.getUser_num(), pageMaker.getMakeRow());
+				totalMoney = workDAO.totalMoney(user_num);
+				request.setAttribute("totalMoney", totalMoney);
+				request.setAttribute("workTotal", workTotalCount);
+				request.setAttribute("list", ar);
+				request.setAttribute("makePage", pageMaker.getMakePage());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			actionFoward.setCheck(true);
+			actionFoward.setPath("../WEB-INF/view/MYPAGE/salesRequestMoney.jsp");
 		}
-		
-		int totalCount = 0;
-		int user_num;
-		int workTotalCount = 0;
-		int totalMoney = 0;
-		try {
-			user_num = Integer.parseInt(request.getParameter("user_num"));
-			
-			totalCount = workDAO.getTotalCount(user_num, "승인");
-			
-			workTotalCount = workDAO.workTotalCount(user_num);
-			
-			PageMaker pageMaker = new PageMaker(curPage, totalCount);
-			
-			List<WorkDTO> ar = workDAO.MoneySelectList(memberDTO.getUser_num(), pageMaker.getMakeRow());
-			totalMoney = workDAO.totalMoney(user_num);
-			request.setAttribute("totalMoney", totalMoney);
-			request.setAttribute("workTotal", workTotalCount);
-			request.setAttribute("list", ar);
-			request.setAttribute("makePage", pageMaker.getMakePage());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		actionFoward.setCheck(true);
-		actionFoward.setPath("../WEB-INF/view/MYPAGE/salesRequestMoney.jsp");
 				
 		return actionFoward;
 	}

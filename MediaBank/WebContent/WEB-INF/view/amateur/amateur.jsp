@@ -71,6 +71,7 @@
 							</c:if>
 						</c:forEach>
 					</div>
+					<c:if test="${makePage.totalPage > 0}">
   						<c:if test="${requestScope.page.curBlock>1}">
 							<a href="./amateur.amateur?curPage=1&select=${requestScope.select}&search=${requestScope.search}">&lt;&lt;</a>
 							<a href="./amateur.amateur?curPage=${page.startNum-1}&select=${requestScope.select}&search=${requestScope.search}">[이전]</a>
@@ -86,8 +87,9 @@
 							<li><a href="./amateur.amateur?curPage=${requestScope.page.getLastNum()+1}&select=${requestScope.select}&search=${requestScope.search}">[다음]</a></li>
 							<li><a href="./amateur.amateur?curPage=${requestScope.page.totalPage}&select=${requestScope.select}&search=${requestScope.search}">&gt;&gt;</a></li>
 						</c:if>
-	</div>
+					</c:if>
 				</div>
+			</div>
  
 
 <!-- END GRID -->

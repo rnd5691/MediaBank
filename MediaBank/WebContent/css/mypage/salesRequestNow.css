@@ -1,10 +1,10 @@
 @charset "UTF-8";
-
-html, body	{
-	height: 100%;
-	
+.body>form{
+	width : 1000px;
 }
-
+.totalbody, .title{
+	width : 700px;
+}
 .frm	{
 	width: 100%;
 	height: auto;
@@ -25,7 +25,6 @@ html, body	{
 }
 
 .btn	{
-	width: 100%;
 	display: inline-block;
 }
 
@@ -59,14 +58,9 @@ h4	{
 	display: inline-block;
 }
 
-
-.images1	{
-	width: 200px;
-	height: 200px;
-}
-
 .tdtable1	{
 	padding-right: 10px;
+	padding-left: 10px;
 }
 
 .trtable1	{
@@ -74,28 +68,18 @@ h4	{
 	
 }
 
-.#btn	{
-	float: right;
-	width: 140px;
-}
-
-
-.imgvideo	{
-	display: inline-block;
-}
-
 #btn_video	{
 	width: 140px;
 	float: right;
-	margin-right: 12%;
-	margin-bottom: 5%;
 }
 
 #btn_image	{
 	width: 140px;
 	float: right;
-	margin-right: 12%;
-	margin-bottom: 5%;
+}
+
+.pagination > a	{
+	vertical-align: center;
 }
 
 .tab-content	{
@@ -104,19 +88,30 @@ h4	{
 
 .nav-tabs	{
 	width: 700px;
-	z-index: 0;
 }
 
 .container	{
 	width: 700px;
+	margin-bottom: 20px;
 }
-
-.pagination	{
-	display: block;
+.images1{
 	text-align: center;
+	margin-bottom: 10px;
 }
-
-.pagination > li > a	{
-	float: none;
-	margin-left: -5px;
+.images1 img{
+	display: block;
+	width : 100%;
+	margin: auto 0;
+}
+.images1 div{
+	position: relative;
+	display: flex;
+	*display: inline;
+	zoom:1;
+	width : 200px;
+	height : 200px;
+	overflow: hidden;
+}
+#button{
+	float : right;
 }

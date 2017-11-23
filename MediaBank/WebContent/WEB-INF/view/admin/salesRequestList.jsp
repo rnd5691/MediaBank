@@ -15,7 +15,7 @@
 <link href="../css/mypage/List.css" rel="stylesheet">
 <link href="../css/admin/sales.css" rel="stylesheet">
 </head>
-<body>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 <!-- header start -->
 <c:import url="./header.jsp"></c:import>
 <!-- header finish -->

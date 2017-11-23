@@ -9,14 +9,12 @@ import javax.servlet.http.HttpSession;
 
 import com.imagestore.action.Action;
 import com.imagestore.action.ActionFoward;
-import com.imagestore.buy.BuyDAO;
-import com.imagestore.buy.BuyDTO;
 import com.imagestore.file.FileDAO;
 import com.imagestore.file.FileDTO;
 import com.imagestore.member.MemberDTO;
 import com.imagestore.util.PageMaker;
 
-public class BuyListService implements Action {
+public class SalesRequestNowAdd implements Action {
 
 	@Override
 	public ActionFoward doProcess(HttpServletRequest request, HttpServletResponse response) throws SQLException {
@@ -29,39 +27,42 @@ public class BuyListService implements Action {
 			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 			actionFoward.setCheck(true);
 		}else {
-			BuyDAO buyDAO = new BuyDAO();
+			String file_kind = request.getParameter("file_kind");
+			int user_num = memberDTO.getUser_num();
 			int curPage = 1;
 			try{
-				curPage = Integer.parseInt(request.getParameter("curPage"));
+				curPage = Integer.parseInt(request.getParameter("curPage") == null?"1":request.getParameter("curPage"));
 			}catch(Exception e){
 				curPage=1;
 			}
-			int totalCount =0;
+			int totalCount = 0;
+			
+			List<FileDTO> imageAr = null;
+			List<FileDTO> videoAr = null;
+			
+			FileDAO fileDAO = null;
 			
 			try {
 				
-				totalCount = buyDAO.getTotalCount(memberDTO.getUser_num());
+				fileDAO = new FileDAO();
+				totalCount = fileDAO.getTotalCount(user_num, file_kind);
 				PageMaker pageMaker = new PageMaker(curPage, totalCount);
-				List<BuyDTO> ar = buyDAO.selectList(memberDTO.getUser_num(), pageMaker.getMakeRow());
-				FileDAO fileDAO = new FileDAO();
-				List<FileDTO> file = null;
-				for(int i=0; i<ar.size(); i++) {
-					file = fileDAO.selectWorkSeq(ar.get(i).getFile_num());
-				}
-				for(int i=0; i<ar.size(); i++) {
-					System.out.println("작가명 : "+ar.get(i).getNickname());
-				}
-				request.setAttribute("list", ar);
+				imageAr = fileDAO.selectNow(user_num, file_kind);
+				videoAr = fileDAO.selectNow(user_num, file_kind);
+				
+				request.setAttribute("file", imageAr);
+				request.setAttribute("video", videoAr);
+				request.setAttribute("file_kind", file_kind);
+				request.setAttribute("user_num", user_num);
+				
 				request.setAttribute("makePage", pageMaker.getMakePage());
-				request.setAttribute("file", file);
+				
 			} catch (Exception e) {
-				e.printStackTrace();
+				// TODO: handle exception
 			}
-			
 			actionFoward.setCheck(true);
-			actionFoward.setPath("../WEB-INF/view/MYPAGE/buyList.jsp");
+			actionFoward.setPath("../WEB-INF/view/MYPAGE/add/"+file_kind+"Add.jsp");
 		}
 		return actionFoward;
 	}
-
 }

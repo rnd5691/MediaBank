@@ -21,36 +21,41 @@ public class SalesRequestViewService implements Action {
 	@Override
 	public ActionFoward doProcess(HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		ActionFoward actionFoward = new ActionFoward();
-		WorkDAO workDAO = new WorkDAO();
-		int work_seq = Integer.parseInt(request.getParameter("work_seq"));
-		
-		WorkDTO workDTO = null;
-		FileDTO fileDTO = null;
-		Connection con = null;
-		try{
-			con = DBConnector.getConnect();
-			con.setAutoCommit(false);
-			workDTO = workDAO.selectOne(work_seq, con);
-			FileDAO fileDAO = new FileDAO();
-			fileDTO = fileDAO.selectOne(work_seq, con);
-			con.commit();
-		}catch(Exception e){
-			e.printStackTrace();
-			con.rollback();
-		} finally {
-			con.setAutoCommit(true);
-			con.close();
-		}
-		request.setAttribute("file", fileDTO);
-		request.setAttribute("work", workDTO);
-		
 		HttpSession session = request.getSession();
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-		
-		if(memberDTO.getKind().equals("admin")){
-			actionFoward.setPath("../WEB-INF/view/admin/salesRequestView.jsp");
-		}else{			
-			actionFoward.setPath("../WEB-INF/view/MYPAGE/salesRequestView.jsp");
+		if(memberDTO == null) {
+			request.setAttribute("message", "잘못된 접근 방식 입니다.");
+			request.setAttribute("path", "../index.jsp");
+			actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+		}else {
+			WorkDAO workDAO = new WorkDAO();
+			int work_seq = Integer.parseInt(request.getParameter("work_seq"));
+			
+			WorkDTO workDTO = null;
+			FileDTO fileDTO = null;
+			Connection con = null;
+			try{
+				con = DBConnector.getConnect();
+				con.setAutoCommit(false);
+				workDTO = workDAO.selectOne(work_seq, con);
+				FileDAO fileDAO = new FileDAO();
+				fileDTO = fileDAO.selectOne(work_seq, con);
+				con.commit();
+			}catch(Exception e){
+				e.printStackTrace();
+				con.rollback();
+			} finally {
+				con.setAutoCommit(true);
+				con.close();
+			}
+			request.setAttribute("file", fileDTO);
+			request.setAttribute("work", workDTO);
+			
+			if(memberDTO.getKind().equals("admin")){
+				actionFoward.setPath("../WEB-INF/view/admin/salesRequestView.jsp");
+			}else{			
+				actionFoward.setPath("../WEB-INF/view/MYPAGE/salesRequestView.jsp");
+			}		
 		}
 		actionFoward.setCheck(true);
 		

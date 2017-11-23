@@ -34,6 +34,7 @@ public class BuyDAO {
 	
 	//viewPage file_num 비교
 			public BuyDTO buyCheck(int user_num, FileDTO fileDTO, WorkDTO workDTO, Connection con) throws Exception {
+				
 				String sql = "SELECT * FROM buy_info WHERE user_num=? and file_num=? and work_seq=?";
 				PreparedStatement st = con.prepareStatement(sql);
 				st.setInt(1, user_num);
@@ -110,7 +111,7 @@ public class BuyDAO {
 			BuyDTO buyDTO = new BuyDTO();
 			buyDTO.setBuy_seq(rs.getInt("buy_seq"));
 			buyDTO.setUser_num(rs.getInt("user_num"));
-			buyDTO.setNickname(memberDAO.searchNickName(user_num));
+			buyDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num"), memberDAO.searchKind(rs.getInt("user_num"))));
 			buyDTO.setWork(rs.getString("work"));
 			buyDTO.setFile_num(rs.getInt("file_num"));
 			buyDTO.setBuy_date(rs.getDate("buy_date"));

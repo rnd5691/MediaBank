@@ -1,9 +1,6 @@
 package com.imagestore.amateur;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +10,9 @@ import com.imagestore.action.Action;
 import com.imagestore.action.ActionFoward;
 import com.imagestore.file.FileDAO;
 import com.imagestore.file.FileDTO;
-import com.imagestore.util.DBConnector;
 import com.imagestore.util.MakePage;
-import com.imagestore.util.MakeRow;
 import com.imagestore.util.PageMaker;
 import com.imagestore.work.WorkDAO;
-import com.imagestore.work.WorkDTO;
 
 public class AmateurService implements Action {
 	@Override

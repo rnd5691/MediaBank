@@ -6,8 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- css -->
-<link href="../css/index.css" rel="stylesheet">
-<link href="../css/header.css" rel="stylesheet">
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
@@ -17,10 +16,11 @@
 <!-- flex Imagae plugin -->
 <link href="${pageContext.request.contextPath}/plugin/jQuery-flexImages-master/jquery.flex-images.css" rel="stylesheet">
 <script src="${pageContext.request.contextPath}/plugin/jQuery-flexImages-master/jquery.flex-images.min.js"></script>
-
+<link href="../css/index.css" rel="stylesheet">
+<link href="../css/header.css" rel="stylesheet">
+<link href="../css/search/searchList.css" rel="stylesheet">
 <title>Insert title here</title>
-<style type="text/css">
-</style>
+
 <script>
 	$(function() {
 		var API_KEY = '5591688-41cb145c7a8c9f609261640ef';
@@ -57,11 +57,9 @@
 				+ encodeURIComponent('${requestScope.search}')+"&pretty=true"+"&page="+perPage;
 		
 		if("${requestScope.select}"=="video"){
-			alert("비디오");
 			URL = "https://pixabay.com/api/videos/?key="+ API_KEY + "&q="
 			+ encodeURIComponent('${requestScope.search}')+"&pretty=true"+"&page="+perPage;
 		} else {
-			alert("사진")
 			URL = "https://pixabay.com/api/?key=" + API_KEY +"&q="
 			+ encodeURIComponent('${requestScope.search}')+"&pretty=true"+"&page="+perPage;
 		}
@@ -96,12 +94,12 @@
 				}
 				$.each(data.hits, function(i, hit) {
 					if("${requestScope.select}"=="video"){
-						$(".flex-image").append("<div class='item item"+count+"'><video id=video"+count+" controls><div>");
+						$(".flex-image").append("<div class='item item"+count+"'><a href='"+hit.pageURL+"'><video id=video"+count+" controls></a><div>");
 						$("#video" + count).prop("src", hit.videos.tiny.url);
 						$("#select-video").prop("selected", true);
 						count++;
 					} else {
-						$(".flex-image").append("<div class='item item"+count+"'><a href='"+hit.pageURL+"'><img id=img"+count+"></a></div>");
+						$(".flex-image").append("<div class='item item"+count+"'><a href='"+hit.pageURL+"'><img id=img"+count+"></a><div>");
 						var re = hit.webformatURL.indexOf('_');
 						var lstr = hit.webformatURL.lastIndexOf('.');
 						var lstr2 = hit.webformatURL.lastIndexOf('_');//_640.jpg
@@ -122,87 +120,7 @@
 		
 	});
 </script>
-<style type="text/css">
-	.search_con {
-		width: 100%;
-		height: 200px;
-	}
-	.item {
-		float: left;
-	}
-	.item img {
-		opacity: 0.9;
-    	/* margin: 1px; */
-    	height: 180px;
-    	/* width: 100%; */
-    	padding: 2px;
-   		width: 280px;
-    	margin: 0 auto;
-	}
-	.item video {
-	    display: inline-block;
-    	vertical-align: baseline;
-    	margin: 2px;
-    	height: 360px;
-    	width: 566px;
-	}
-	.item img:hover {
-		opacity: 1;
-	}
-	.paging {
-		margin: 0 auto;
-    	text-align: center;
-    	padding: 50px;
-	}
-	.paging a {
-		margin: 10px;
-	}
-	.flex-image {
-	    width: 1220px;
-    	margin: 0 auto;
-    	height: 900px;
-    	display: block;
-    	max-width: 100%;
-	}
-	#search_warp {
-    	width: 700px;
-    	padding: 50px;
-    	left: auto;
-    	margin: 10px auto;
-    	border-radius: 5px;
-    	background-color: white;
-    	position: relative;
-    	padding-top: 270px;
-    	/* top: -200px; */
-	}
-	.form-control {
-    	display: inline-block;
-    	width:442px;
-    	height: 34px;
-    	padding: 6px 12px;
-    	font-size: 14px;
-    	line-height: 1.42857143;
-    	color: #555;
-    	background-color: #fff;
-    	background-image: none;
-    	border: 0;
-    	border-radius: 4px;
-    	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    	-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    	-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-	}
-	#f_position {
-    	left: 30%;
-    	top: 500px;
-    	width: 100%;
-    	border: 1px solid;
-	}
-	.body {
-		width: 1134px;
-	}
-</style>
+
 </head>
 <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 	<c:import url="${pagecontext.request.contextpath}/WEB-INF/view/temp/header.jsp"></c:import>
@@ -242,8 +160,8 @@
       				<a href="searchView.search?work_seq=${author.work_seq}"><img src="${pageContext.request.contextPath}/upload/${author.file_name}"></a>
       			</c:if>
       			<c:if test="${author.file_kind eq 'video' }">		
-       			<video src="${pageContext.request.contextPath}/upload/${author.file_name}" width="280" height="180" controls="controls"></video>		
-       		</c:if>
+ -      			<a href="searchView.search?work_seq=${author.work_seq}"><video src="${pageContext.request.contextPath}/upload/${author.file_name}" width="280" height="180" controls="controls"></video></a>		
+ -      		</c:if>
       		</div>
       	</c:forEach>
 	   </div>

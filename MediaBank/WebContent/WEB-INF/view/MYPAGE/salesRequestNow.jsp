@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>내 작품 판매 승인 현황</title>
+<title>현재 판매중인 내 작품</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -21,94 +21,20 @@ $(function(){
 		$("#li_image").addClass("active");
 		$("#li_video").removeClass("active");
 		$("#image").addClass("in active");
-		$("#video").removeClass("in active");
+		$("#image").load('salesRequestNowAdd.mypage?file_kind='+file_kind);
 	}else if(file_kind == "video"){
 		$("#li_video").addClass("active");
 		$("#li_image").removeClass("active");
-		$("#image").removeClass("in active");
 		$("#video").addClass("in active");
+		$("#video").load('salesRequestNowAdd.mypage?file_kind='+file_kind);
 	}
-	$("#btn_image").click(function(){
-		var sell = "";
-		$("input:checkbox[name=jin]").each(function(){
-			if((this).checked)	{
-				if(sell==""){
-					sell=this.id+"_Y";
-				}else	{
-					sell+=","+this.id+"_Y";
-				}
-			}else	{
-				if(sell==""){
-					sell=this.id+"_N";
-				}else	{
-					sell+=","+this.id+"_N";
-				}
-			}
-			
-		});
-		 $.ajax({
-             	type : "POST",
-	            url : "mypageSalesRequestNowUpdate.mypage",
-	            data : {"sell":sell, "user_num":user_num, "file_kind":file_kind},	
-	            dataType : "text",
-	            error : function(){
-	                alert('저장이 실패하였습니다.');
-	            },
-	            success : function(data){
-	                alert("저장이 완료되었습니다.") ;
-	            }
-	             
-	    });
+	
+	$("#button").click(function(){
+		document.frm.action="mypageSalesRequestNowUpdate.mypage?file_kind=${file_kind}";
+		document.frm.method="POST";
+		document.frm.submit();
 	});
 	
-	$("#btn_video").click(function(){
-		var sell = "";
-		$("input:checkbox[name=movie]").each(function(){
-			if((this).checked)	{
-				if(sell==""){
-					sell=this.id+"_Y";
-				}else	{
-					sell+=","+this.id+"_Y";
-				}
-			}else	{
-				if(sell==""){
-					sell=this.id+"_N";
-				}else	{
-					sell+=","+this.id+"_N";
-				}
-			}
-			
-		});
-		 $.ajax({
-             	type : "POST",
-	            url : "mypageSalesRequestNowUpdate.mypage",
-	            data : {"sell":sell, "user_num":user_num, "file_kind":file_kind},	
-	            dataType : "text",
-	            error : function(){
-	                alert('저장이 실패하였습니다.');
-	            },
-	            success : function(data){
-	                alert("저장이 완료되었습니다.") ;
-	            }
-	             
-	    });
-	});
-	
-	<c:forEach items="${requestScope.file}" var="dto">
-		if(${dto.sell eq 'Y'}){
-			$("#" + ${dto.file_num}).prop("checked", true);
-		}else	{
-			$("#" + ${dto.file_num}).prop("checked", false);
-		}
-	</c:forEach>
-	
-	<c:forEach items="${requestScope.video}" var="dto">
-		if(${dto.sell eq 'Y'}){
-			$("#" + ${dto.file_num}).prop("checked", true);
-		}else	{
-			$("#" + ${dto.file_num}).prop("checked", false);
-		}
-	</c:forEach>
 });
 
 function fn_tabClick(tabId){
@@ -140,95 +66,45 @@ $(function(){
 
 <div class="body">
 <c:import url="./menu.jsp"></c:import>
-<form action="mypageSalesRequestNow.mypage" method="post" name="frm">
-	
-
-<div class="totalbody">
-	<div class="title">
-		<h1>My Page</h1>&nbsp;&nbsp;<h5>현재 판매 중인 내 작품</h5>
+<form name="frm">
+	<div class="totalbody">
+		<div class="title">
+			<h1>My Page</h1>&nbsp;&nbsp;<h5>현재 판매 중인 내 작품</h5>
+		</div>
+		<div class="imagebody">
+			<input type="hidden" id="file_kind" name="file_kind">
+		<div class="container">
+		  <ul class="nav nav-tabs">
+	    	<li id="li_image" class="active"><a data-toggle="tab" href="#image" onclick="fn_tabClick('sajin')">이미지</a></li>
+	    	<li id="li_video"><a data-toggle="tab" href="#video" onclick="fn_tabClick('youngsang')">동영상</a></li>
+	    </ul>
+		<div class="tab-content">
+		<div id="${file_kind}" class="tab-pane fade in active">
+	    </div>
+	    <c:if test="${makePage.totalPage>0 }">
+	    	<button id="button" class="btn btn-default">저장</button>	
+	    </c:if>
+	  </div>
 	</div>
-	<div class="imagebody">
-		<input type="hidden" id="user_num" name="user_num" value="${sessionScope.member.user_num}">
-		<input type="hidden" id="file_kind" name="file_kind">
-	<div class="container">
-	  <ul class="nav nav-tabs">
-    	<li id="li_image" class="active"><a data-toggle="tab" href="#image" onclick="fn_tabClick('sajin')">이미지</a></li>
-    	<li id="li_video"><a data-toggle="tab" href="#video" onclick="fn_tabClick('youngsang')">동영상</a></li>
-    </ul>
-	<div class="tab-content">
-	<div id="image" class="tab-pane fade in active">
-    	<table>
-   	<c:forEach items="${requestScope.file}" var="dto">
-    <c:if test="${dto.file_kind eq 'image'}">
-			<tr class="trtable1">
-				<td class="tdtable1">
-						<input type="checkbox" class="img" name="jin" id="${dto.file_num}">
-					<div class="images1">
-						<img class="imgvideo" style="width:200px; height:200px;" src="${pageContext.request.contextPath}/upload/${dto.file_name}">
-					</div>
-				</td>
-			</tr>
-		</c:if>
-		</c:forEach>
-		</table>
-		<c:if test="${makePage.totalPage>0 }">
-		<div class="paging">
-			<ul class="pagination">
-				<c:if test="${makePage.curBlock>1}">
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=1&user_num=${member.user_num}&file_kind=${file_kind}">&lt;&lt;</a></li>
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.startNum-1}&user_num=${member.user_num}&file_kind=${file_kind}">[이전]</a></li>
-				</c:if>
-				<c:forEach begin="${makePage.startNum}" end="${makePage.lastNum}" var="i">
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${i}&user_num=${member.user_num}&file_kind=${file_kind}">${i}</a></li>
-				</c:forEach>
-				<c:if test="${makePage.curBlock<makePage.totalBlock}">
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.lastNum+1}&user_num=${member.user_num}&file_kind=${file_kind}">[다음]</a></li>
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.totalPage}&user_num=${member.user_num}&file_kind=${file_kind}">&gt;&gt;</a></li>
-				</c:if>
-			</ul>
-		</div>
-	</c:if>
-		<button type="button" class="btn btn-default" id="btn_image">저장</button>	
-    </div>
-    <div id="video" class="tab-pane fade">
-    	<table>
-    <c:forEach items="${requestScope.video}" var="dao">
-    	<c:if test="${dao.file_kind eq 'video'}">
-			<tr class="trtable1">
-				<td class="tdtable1">
-					<input type="checkbox" class="img" name="movie" id="${dao.file_num}">
-					<div class="images1">
-						<video style="width:200px; height:200px;" src="${pageContext.request.contextPath}/upload/${dao.file_name}"></video>
-					</div>
-				</td>
-			</tr>
-		</c:if>
-    </c:forEach>
-		</table>
-		<c:if test="${makePage.totalPage>0}">
-		<div class="paging">
-			<ul class="pagination">
-				<c:if test="${makePage.curBlock>1}">
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=1&user_num=${member.user_num}&file_kind=${file_kind}">&lt;&lt;</a></li>
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.startNum-1}&user_num=${member.user_num}&file_kind=${file_kind}">[이전]</a></li>
-				</c:if>
-				<c:forEach begin="${makePage.startNum}" end="${makePage.lastNum}" var="i">
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${i}&user_num=${member.user_num}&file_kind=${file_kind}">${i}</a></li>
-				</c:forEach>
-				<c:if test="${makePage.curBlock<makePage.totalBlock}">
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.lastNum+1}&user_num=${member.user_num}&file_kind=${file_kind}">[다음]</a></li>
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.totalPage}&user_num=${member.user_num}&file_kind=${file_kind}">&gt;&gt;</a></li>
-				</c:if>
-			</ul>
-		</div>
-	</c:if>
-    <button type="button" class="btn btn-default" id="btn_video">저장</button>	
-    </div>
-    
-  </div>
-</div>
 			
-</div>
+	<c:if test="${makePage.totalPage>0 }">
+		<div class="paging">
+			<ul class="pagination">
+				<c:if test="${makePage.curBlock>1}">
+					<li><a href="./mypageSalesRequestNow.mypage?curPage=1&user_num=${member.user_num}&file_kind=${file_kind}">&lt;&lt;</a></li>
+					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.startNum-1}&user_num=${member.user_num}&file_kind=${file_kind}">[이전]</a></li>
+				</c:if>
+				<c:forEach begin="${makePage.startNum}" end="${makePage.lastNum}" var="i">
+					<li><a href="./mypageSalesRequestNow.mypage?curPage=${i}&user_num=${member.user_num}&file_kind=${file_kind}">${i}</a></li>
+				</c:forEach>
+				<c:if test="${makePage.curBlock<makePage.totalBlock}">
+					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.lastNum+1}&user_num=${member.user_num}&file_kind=${file_kind}">[다음]</a></li>
+					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.totalPage}&user_num=${member.user_num}&file_kind=${file_kind}">&gt;&gt;</a></li>
+				</c:if>
+			</ul>
+		</div>
+	</c:if>
+			</div>
 		</div>
 </form>
 <div class="push"></div>

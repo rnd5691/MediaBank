@@ -31,3 +31,13 @@ td>textarea, div>textarea{
 .download{
 	text-align: center;
 }
+video::-internal-media-controls-download-button {
+        display:none;
+}
+video::-webkit-media-controls {
+        overflow: hidden;
+}
+video::-webkit-media-controls-enclosure {
+        width: calc(100% + 32px);
+        margin-left: auto;
+}

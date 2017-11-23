@@ -42,8 +42,11 @@ public class ViewService implements Action {
 			FileDAO fileDAO = new FileDAO();
 			fileDTO = fileDAO.selectOne(work_seq, con);
 			
-			BuyDAO buyDAO = new BuyDAO();
-			buyDTO = buyDAO.buyCheck(memberDTO.getUser_num(), fileDTO, workDTO, con);
+			if(memberDTO != null) {
+				BuyDAO buyDAO = new BuyDAO();
+				buyDTO = buyDAO.buyCheck(memberDTO.getUser_num(), fileDTO, workDTO, con);
+				request.setAttribute("buyCheck", buyDTO);
+			}
 			
 			con.commit();
 		}catch(Exception e){
@@ -56,7 +59,7 @@ public class ViewService implements Action {
 		
 		request.setAttribute("file", fileDTO);
 		request.setAttribute("work", workDTO);
-		request.setAttribute("buyCheck", buyDTO);
+		
 		
 		actionFoward.setCheck(true);
 		actionFoward.setPath("../WEB-INF/view/search/searchView.jsp");

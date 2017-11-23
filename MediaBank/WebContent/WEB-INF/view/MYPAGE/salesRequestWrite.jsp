@@ -26,11 +26,10 @@
 				var maxSize = 1024*1024*10;
 				if(file.size>maxSize){
 					alert("업로드는 10MB까지 가능합니다");
-					check = false;
+				 	check = false;
 				} else {
-					check = true;
-				}
-				
+				 	check = true;
+				}				
 				img.src = _URL.createObjectURL(file);
 				img.onload = function(){
 				 	$("#fileWidth").val(img.naturalWidth);
@@ -38,7 +37,6 @@
 				}
 			}
 		});
-		
 		$("#btn").click(function(){
 			if(check==false){
 				alert("업로드용량이 초과 되었습니다");
@@ -46,7 +44,6 @@
 				$("#frm").submit();
 			}
 		});
-		
 	});
 </script>
 </head>
@@ -62,7 +59,7 @@
 		<div class="title">
 			<h1>My Page</h1>&nbsp;&nbsp;<h5>내 작품 판매승인 요청 작성</h5>
 		</div>
-		<form action="mypageSalesRequestWrite.mypage" id="frm" method="post" enctype="multipart/form-data">
+		<form action="mypageSalesRequestWrite.mypage" method="post" enctype="multipart/form-data" id="frm">
 			<input type="hidden" name="nickname" value="${requestScope.nickname}">
 			<table class="table table-hover">
 				<tr>
@@ -71,9 +68,12 @@
 				</tr>
 				<tr>
 					<td>파일</td>
-					<td class="input_info"><input type="file" required="required" id="file" name="file"></td>
-					<input type="hidden" id="fileWidth" name="width"><!-- width 값 -->
-					<input type="hidden" id="fileHeight" name="height"><!-- height 값  -->
+					<td class="input_info">
+						<input type="file" required="required" id="file" name="file">
+						<input type="hidden" id="fileWidth" name="width"><!-- width 값 -->
+						<input type="hidden" id="fileHeight" name="height"><!-- height 값  -->
+					</td>
+					
 				</tr>
 				<tr>
 					<td>가격</td>

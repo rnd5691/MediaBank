@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <servlet>
     <servlet-name>Member</servlet-name>
-    <servlet-class>com.imagestore.control.MemberController</servlet-class>
+    <servlet-class>com.imagestore.control.Controller</servlet-class>
     <init-param>
       <param-name>properties</param-name>
       <param-value>member.properties</param-value>
@@ -14,7 +14,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>qna</servlet-name>
-    <servlet-class>com.imagestore.control.QnaController</servlet-class>
+    <servlet-class>com.imagestore.control.Controller</servlet-class>
     <init-param>
       <param-name>properties</param-name>
       <param-value>qna.properties</param-value>
@@ -26,7 +26,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>mypage</servlet-name>
-    <servlet-class>com.imagestore.control.MyPageController</servlet-class>
+    <servlet-class>com.imagestore.control.Controller</servlet-class>
     <init-param>
       <param-name>properties</param-name>
       <param-value>mypage.properties</param-value>
@@ -50,7 +50,7 @@
   </filter-mapping>
   <servlet>
     <servlet-name>Search</servlet-name>
-    <servlet-class>com.imagestore.control.SearchController</servlet-class>
+    <servlet-class>com.imagestore.control.Controller</servlet-class>
     <init-param>
       <param-name>properties</param-name>
       <param-value>search.properties</param-value>
@@ -61,27 +61,27 @@
     <url-pattern>*.search</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>Amateur</servlet-name>
-  	<servlet-class>com.imagestore.control.SearchController</servlet-class>
-  		<init-param>
-  			<param-name>properties</param-name>
-  			<param-value>amateur.properties</param-value>
-  		</init-param>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>Amateur</servlet-name>
-  	<url-pattern>*.amateur</url-pattern>
-  </servlet-mapping>
-  <servlet>
-  	<servlet-name>Payment</servlet-name>
-  	<servlet-class>com.imagestore.control.SearchController</servlet-class>
-  		<init-param>
-  			<param-name>properties</param-name>
-  			<param-value>payment.properties</param-value>
-  		</init-param>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>Payment</servlet-name>
-  	<url-pattern>*.payment</url-pattern>
-  </servlet-mapping>
+   	<servlet-name>Amateur</servlet-name>
+   	<servlet-class>com.imagestore.control.Controller</servlet-class>
+   		<init-param>
+   			<param-name>properties</param-name>
+   			<param-value>amateur.properties</param-value>
+   		</init-param>
+   </servlet>
+   <servlet-mapping>
+   	<servlet-name>Amateur</servlet-name>
+   	<url-pattern>*.amateur</url-pattern>
+   </servlet-mapping>
+   <servlet>
+   	<servlet-name>Payment</servlet-name>
+   	<servlet-class>com.imagestore.control.DownController</servlet-class>
+   		<init-param>
+   			<param-name>properties</param-name>
+   			<param-value>payment.properties</param-value>
+   		</init-param>
+   </servlet>
+   <servlet-mapping>
+   <servlet-name>Payment</servlet-name>
+   	<url-pattern>*.payment</url-pattern>
+   </servlet-mapping>
 </web-app>

@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,20 +15,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.imagestore.action.Action;
+import com.imagestore.action.ActionDown;
 import com.imagestore.action.ActionFoward;
 
 /**
- * Servlet implementation class MemberJoinService
+ * Servlet implementation class AdminController
  */
-@WebServlet("/MemberJoinService")
-public class MemberController extends HttpServlet {
+@WebServlet("/DownController")
+public class DownController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    HashMap<String, Object> map; //map 선언
+	HashMap<String, Object> map;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberController() {
+    public DownController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -82,20 +81,15 @@ public class MemberController extends HttpServlet {
 		uri = uri.substring(startIndex, lastIndex);
 		System.out.println(uri);
 		//-------------------
-		Action action = (Action)map.get(uri);
+		ActionDown action = (ActionDown)map.get(uri);
+		
 		ActionFoward actionFoward = null;
+		
 		try {
-			actionFoward = action.doProcess(request, response);
+			action.doProcess(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		//-------------------
-		if(actionFoward.isCheck()){
-			RequestDispatcher view = request.getRequestDispatcher(actionFoward.getPath());
-			view.forward(request, response);
-		}else{
-			response.sendRedirect(actionFoward.getPath());
 		}
 	}
 

@@ -17,11 +17,11 @@
 		<div class="btn-group-vertical">
 			<div class="mypage">MY PAGE</div>
 			<a id="myinfo" href="mypageMyInfo.mypage" class="btn btn-default">내 정보</a>
-			<a id="buyList" class="btn btn-default" href="mypageBuyList.mypage?user_num=${sessionScope.member.user_num}">구매 목록</a>
+			<a id="buyList" class="btn btn-default" href="mypageBuyList.mypage">구매 목록</a>
 			<c:if test="${sessionScope.artist eq 'artist' }">
 				<a id="salesRequestList" class="btn btn-default" href="mypageSalesRequestList.mypage">내 작품 판매승인 요청 현황</a>
-				<a id="salesNow" class="btn btn-default" href="mypageSalesRequestNow.mypage?user_num=${sessionScope.member.user_num}">현재 판매 중인 내 작품</a>
-				<a id="salesRequestMoney" class="btn btn-default" href="mypageSalesRequestMoney.mypage?user_num=${sessionScope.member.user_num}">작품 별 수익 현황</a>
+				<a id="salesNow" class="btn btn-default" href="mypageSalesRequestNow.mypage">현재 판매 중인 내 작품</a>
+				<a id="salesRequestMoney" class="btn btn-default" href="mypageSalesRequestMoney.mypage">작품 별 수익 현황</a>
 			</c:if>
 			<!-- Trigger the modal with a button -->
 			<button class="btn btn-default"data-toggle="modal" data-target="#session">탈퇴하기</button>

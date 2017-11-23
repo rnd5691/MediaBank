@@ -38,7 +38,7 @@ public class MemberNaverCallbackService implements Action {
 	    String access_token = null;
 	    String refresh_token = null;
 	    try {
-	    	redirectURI = URLEncoder.encode("http://localhost/MediaBank/member/memberPerson.member", "UTF-8");
+	    	redirectURI = URLEncoder.encode("http://localhost/MediaBank3/member/memberPerson.member", "UTF-8");
 	    	apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 	    	apiURL += "client_id=" + clientId;
 	    	apiURL += "&client_secret=" + clientSecret;
@@ -82,6 +82,7 @@ public class MemberNaverCallbackService implements Action {
 	    		//회원정보에 값이 없을 때
 	    		HttpSession session = request.getSession();
 	    		session.setAttribute("naver", personDTO);
+	    		
 	    		actionFoward.setCheck(false);
 	    		actionFoward.setPath("../member/memberAgreement.member");
 	    	}else{

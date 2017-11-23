@@ -20,16 +20,16 @@ import com.imagestore.action.Action;
 import com.imagestore.action.ActionFoward;
 
 /**
- * Servlet implementation class QnaController
+ * Servlet implementation class AdminController
  */
-@WebServlet("/QnaController")
-public class QnaController extends HttpServlet {
+@WebServlet("/Controller")
+public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	HashMap<String, Object> map;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QnaController() {
+    public Controller() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -71,6 +71,7 @@ public class QnaController extends HttpServlet {
     		}
     	}
     }
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

@@ -76,8 +76,6 @@ $(function() {
 			console.log('No hits');
 		}
 	});
-	
-	
 });
 </script>
 </head>

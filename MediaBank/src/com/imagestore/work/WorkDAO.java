@@ -13,92 +13,104 @@ import com.imagestore.util.MakeRow;
 
 public class WorkDAO {
 	//무명작가용 토탈카운트 이미지용
-	public int artistGetTotalCountImgString (String select, String search) throws Exception	{
-		Connection con = DBConnector.getConnect();
-		String sql = "select distinct count(nvl(w.work_seq, 0)) from work_info w, file_table f WHERE sell='Y' and upload_check='승인' and "+select+" Like '%"+search+"%' and f.file_kind='image' and w.work_seq=f.work_seq";
-		PreparedStatement st = con.prepareStatement(sql);
-		ResultSet rs = st.executeQuery();
-		rs.next();
-		int result = rs.getInt(1);
-		DBConnector.disConnect(rs, st, con);
-		return result;
-	}
-	//무명작가용 토탈카운트 비디오용
-	public int artistGetTotalCountVideo(String select, String search) throws Exception {
-		Connection con = DBConnector.getConnect();
-		String sql = "select count(w.work_seq) from work_info w, file_table f WHERE sell='Y' and upload_check='승인' and "+select+" Like '%"+search+"%' and f.file_kind='video' and w.work_seq=f.work_seq";
-		PreparedStatement st = con.prepareStatement(sql);
-		ResultSet rs = st.executeQuery();
-		rs.next();
-		int result = rs.getInt(1);
-		DBConnector.disConnect(rs, st, con);
-		return result;
-	}
-	
-	//태그에 해당하는 값만 가져와! 무명작가게시판용
-	public List<FileDTO> seachWorkSEQ(String tag, String kind, MakeRow makeRow) throws Exception {
-		Connection con = DBConnector.getConnect();
-		String sql = "SELECT * FROM (SELECT rownum R, Q.* FROM (SELECT rownum ,f.* FROM FILE_TABLE f WHERE f.file_kind='"+kind+"' and work_seq IN (SELECT w.work_seq FROM work_info w WHERE tag LIKE '%"+tag+"%') ORDER BY f.work_seq desc) Q) WHERE R between ? and ?";
-		PreparedStatement st = con.prepareStatement(sql);
-		st.setInt(1, makeRow.getStartRow());
-		st.setInt(2, makeRow.getLastRow());
-		ResultSet rs = st.executeQuery();
-		List<FileDTO> ar = new ArrayList<>();
-		FileDTO fileDTO = null;
-		while(rs.next()) {
-			fileDTO = new FileDTO();
-			fileDTO.setWork_seq(rs.getInt("work_seq"));
-			fileDTO.setFile_name(rs.getString("file_name"));
-			fileDTO.setFile_kind(rs.getString("file_kind"));
-			ar.add(fileDTO);
-		}
-		DBConnector.disConnect(rs, st, con);
-		return ar;
-	}
-	//무명작가 검색창
-	public List<FileDTO> artistSearch(String kind, String select, String search,MakeRow makeRow) throws Exception {
-		Connection con = DBConnector.getConnect();
-		String sql = "SELECT * FROM (SELECT rownum R, Q.* FROM "
-				+ "(SELECT w.*, f.file_name, f.file_kind FROM work_info w, file_table f "
-				+ "WHERE w."+select+" LIKE '%"+search+"%' and w.WORK_SEQ = f.WORK_SEQ and upload_check='승인' and sell='Y' and f.file_kind='"+kind+"'"
-						+ " ORDER BY f.WORK_SEQ desc) Q) WHERE R between ? and ?";
-		PreparedStatement st = con.prepareStatement(sql);
-		st.setInt(1, makeRow.getStartRow());
-		st.setInt(2, makeRow.getLastRow());
-		ResultSet rs = st.executeQuery();
-		FileDTO fileDTO = null;
-		MemberDAO memberDAO = new MemberDAO();
-		List<FileDTO> image = new ArrayList<>();
-		/*HashMap<String, List<FileDTO>> map = new HashMap<>();*/
-		while(rs.next()) {
-			fileDTO = new FileDTO();
-			fileDTO.setWork(rs.getString("work"));
-			fileDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num")));
-			fileDTO.setWork_seq(rs.getInt("work_seq"));
-			fileDTO.setFile_name(rs.getString("file_name"));
-			fileDTO.setFile_kind(rs.getString("file_kind"));
-			
-			image.add(fileDTO);
-		}
-		DBConnector.disConnect(rs, st, con);
-		return image;
-	}
-	
-	//판매여부 업데이트
-		public int sellUpdate(int work_seq, String sell) throws Exception	{
+		public int artistGetTotalCountImgString (String select, String search) throws Exception	{
 			Connection con = DBConnector.getConnect();
-			String sql = "update work_info set sell=? where work_seq=?";
+			String sql = "select distinct count(nvl(w.work_seq, 0)) from work_info w, file_table f WHERE sell='Y' and upload_check='승인' and "+select+" Like '%"+search+"%' and f.file_kind='image' and w.work_seq=f.work_seq";
 			PreparedStatement st = con.prepareStatement(sql);
-			
-			st.setString(1, sell);
-			st.setInt(2, work_seq);
-			
-			int result = st.executeUpdate();
-			
-			DBConnector.disConnect(st, con);
-			
+			ResultSet rs = st.executeQuery();
+			rs.next();
+			int result = rs.getInt(1);
+			DBConnector.disConnect(rs, st, con);
 			return result;
 		}
+		//무명작가용 토탈카운트 비디오용
+		public int artistGetTotalCountVideo(String select, String search) throws Exception {
+			Connection con = DBConnector.getConnect();
+			String sql = "select count(w.work_seq) from work_info w, file_table f WHERE sell='Y' and upload_check='승인' and "+select+" Like '%"+search+"%' and f.file_kind='video' and w.work_seq=f.work_seq";
+			PreparedStatement st = con.prepareStatement(sql);
+			ResultSet rs = st.executeQuery();
+			rs.next();
+			int result = rs.getInt(1);
+			DBConnector.disConnect(rs, st, con);
+			return result;
+		}
+		
+		//태그에 해당하는 값만 가져와! 무명작가게시판용
+		public List<FileDTO> seachWorkSEQ(String tag, String kind, MakeRow makeRow) throws Exception {
+			Connection con = DBConnector.getConnect();
+			String sql = "SELECT * FROM (SELECT rownum R, Q.* FROM (SELECT rownum ,f.* FROM FILE_TABLE f WHERE f.file_kind='"+kind+"' and work_seq IN (SELECT w.work_seq FROM work_info w WHERE tag LIKE '%"+tag+"%') ORDER BY f.work_seq desc) Q) WHERE R between ? and ?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, makeRow.getStartRow());
+			st.setInt(2, makeRow.getLastRow());
+			ResultSet rs = st.executeQuery();
+			List<FileDTO> ar = new ArrayList<>();
+			FileDTO fileDTO = null;
+			while(rs.next()) {
+				fileDTO = new FileDTO();
+				fileDTO.setWork_seq(rs.getInt("work_seq"));
+				fileDTO.setFile_name(rs.getString("file_name"));
+				fileDTO.setFile_kind(rs.getString("file_kind"));
+				ar.add(fileDTO);
+			}
+			DBConnector.disConnect(rs, st, con);
+			return ar;
+		}
+		//무명작가 검색창
+		public List<FileDTO> artistSearch(String kind, String select, String search,MakeRow makeRow) throws Exception {
+			Connection con = DBConnector.getConnect();
+			String sql = "SELECT * FROM (SELECT rownum R, Q.* FROM "
+					+ "(SELECT w.*, f.file_name, f.file_kind FROM work_info w, file_table f "
+					+ "WHERE w."+select+" LIKE '%"+search+"%' and w.WORK_SEQ = f.WORK_SEQ and upload_check='승인' and sell='Y' and f.file_kind='"+kind+"'"
+							+ " ORDER BY f.WORK_SEQ desc) Q) WHERE R between ? and ?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, makeRow.getStartRow());
+			st.setInt(2, makeRow.getLastRow());
+			ResultSet rs = st.executeQuery();
+			FileDTO fileDTO = null;
+			MemberDAO memberDAO = new MemberDAO();
+			List<FileDTO> image = new ArrayList<>();
+			/*HashMap<String, List<FileDTO>> map = new HashMap<>();*/
+			while(rs.next()) {
+				fileDTO = new FileDTO();
+				fileDTO.setWork(rs.getString("work"));
+				fileDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num"), "person"));
+				fileDTO.setWork_seq(rs.getInt("work_seq"));
+				fileDTO.setFile_name(rs.getString("file_name"));
+				fileDTO.setFile_kind(rs.getString("file_kind"));
+				
+				image.add(fileDTO);
+			}
+			DBConnector.disConnect(rs, st, con);
+			return image;
+		}
+		
+		//판매여부 업데이트
+			public int sellUpdate(int work_seq, String sell) throws Exception	{
+				Connection con = DBConnector.getConnect();
+				String sql = "update work_info set sell=? where work_seq=?";
+				PreparedStatement st = con.prepareStatement(sql);
+				
+				st.setString(1, sell);
+				st.setInt(2, work_seq);
+				
+				int result = st.executeUpdate();
+				
+				DBConnector.disConnect(st, con);
+				
+				return result;
+			}
+	//체크 된 작품들 판매여부 업데이트
+	public int sellUpdate(Connection con, int work_seq, String sell) throws Exception	{
+		String sql = "update work_info set sell=? where work_seq=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, sell);
+		st.setInt(2, work_seq);
+		int result = st.executeUpdate();
+		
+		st.close();
+			
+		return result;
+	}
 	//회원탈퇴시 판매유무 변경
 	public int dropOut(int user_num, Connection con) throws Exception{
 		String sql = "update work_info set sell='N' where user_num=?";
@@ -231,7 +243,7 @@ public class WorkDAO {
 				workDTO = new WorkDTO();
 				workDTO.setWork(rs.getString("work"));
 				workDTO.setUser_num(rs.getInt("user_num"));
-				workDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num")));
+				workDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num"), "person"));
 				workDTO.setWork_seq(rs.getInt("work_seq"));
 				workDTO.setWork_date(rs.getDate("work_date"));
 				workDTO.setUpload_check(rs.getString("upload_check"));
@@ -280,7 +292,7 @@ public class WorkDAO {
 			workDTO = new WorkDTO();
 			workDTO.setWork(rs.getString("work"));
 			workDTO.setUser_num(rs.getInt("user_num"));
-			workDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num")));
+			workDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num"), "person"));
 			workDTO.setWork_seq(rs.getInt("work_seq"));
 			workDTO.setWork_date(rs.getDate("work_date"));
 			workDTO.setUpload_check(rs.getString("upload_check"));
@@ -314,7 +326,7 @@ public class WorkDAO {
 			WorkDTO workDTO = new WorkDTO();
 			workDTO.setWork_seq(rs.getInt("work_seq"));
 			workDTO.setWork(rs.getString("work"));
-			workDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num")));
+			workDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num"), "person"));
 			workDTO.setWork_date(rs.getDate("work_date"));
 			workDTO.setUpload_check(rs.getString("upload_check"));
 			workDTO.setDownload_hit(rs.getInt("download_hit"));
@@ -348,7 +360,7 @@ public class WorkDAO {
 			WorkDTO workDTO = new WorkDTO();
 			workDTO.setWork_seq(rs.getInt("work_seq"));
 			workDTO.setWork(rs.getString("work"));
-			workDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num")));
+			workDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num"), "person"));
 			workDTO.setWork_date(rs.getDate("work_date"));
 			workDTO.setUpload_check(rs.getString("upload_check"));
 			workDTO.setDownload_hit(rs.getInt("download_hit"));
@@ -381,7 +393,7 @@ public class WorkDAO {
 			WorkDTO workDTO = new WorkDTO();
 			workDTO.setWork_seq(rs.getInt("work_seq"));
 			workDTO.setWork(rs.getString("work"));
-			workDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num")));
+			workDTO.setNickname(memberDAO.searchNickName(rs.getInt("user_num"), "person"));
 			workDTO.setWork_date(rs.getDate("work_date"));
 			workDTO.setUpload_check(rs.getString("upload_check"));
 			workDTO.setDownload_hit(rs.getInt("download_hit"));

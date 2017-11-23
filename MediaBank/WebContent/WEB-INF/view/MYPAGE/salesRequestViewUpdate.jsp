@@ -12,7 +12,7 @@
 <link href="../css/header.css" rel="stylesheet">
 <link href="../css/mypage/mypage.css" rel="stylesheet">
 <link href="../css/mypage/salesRequestView.css" rel="stylesheet">
-<script>
+<script oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 $(function(){
 	$("#salesRequestList").css('color', 'white');
 	$("#salesRequestList").css('background-color', '#83b14e');
@@ -71,7 +71,7 @@ $(function(){
 	}
 </style>
 </head>
-<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false"> 
+<body>
 <!-- header start -->
 <c:import url="../temp/header.jsp"></c:import>
 <!-- header finish -->

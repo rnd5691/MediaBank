@@ -1,24 +1,17 @@
 package com.imagestore.payment;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.imagestore.action.Action;
-import com.imagestore.action.ActionFoward;
-import com.imagestore.file.FileDAO;
-import com.imagestore.file.FileDTO;
-import com.imagestore.member.MemberDTO;
+import com.imagestore.action.ActionDown;
 
-public class PaymentDownService implements Action {
+public class PaymentDownService implements ActionDown {
 
 	@Override
-	public ActionFoward doProcess(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-		ActionFoward actionFoward = new ActionFoward();
-		PaymentDAO paymentDAO = new PaymentDAO();
+	public void doProcess(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+PaymentDAO paymentDAO = new PaymentDAO();
 		
 		
 		if(request.getMethod().equals("POST")) {
@@ -28,12 +21,11 @@ public class PaymentDownService implements Action {
 			} catch (Exception e) {
 				work_seq = 0;
 			}
-			
+
 			paymentDAO.down(request, response, work_seq);
 			
-			/*actionFoward.setCheck(true);
-			actionFoward.setPath("../WEB-INF/view/search/searchView.jsp?work_seq="+work_seq);*/
 		}
-		return actionFoward;
+
 	}
+
 }

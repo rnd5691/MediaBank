@@ -24,13 +24,12 @@ public class MemberInsertService implements Action {
 	public ActionFoward doProcess(HttpServletRequest request, HttpServletResponse response) throws SQLException{
 		ActionFoward actionFoward = new ActionFoward();
 		HttpSession session = request.getSession();
-		
+		PersonDTO personDTO = (PersonDTO)session.getAttribute("naver");
 		String pw=null;
 		String token=null;
-		if(session.getAttribute("naver").equals(null)){
+		if(personDTO==null){
 			pw = request.getParameter("pw");
 		}else{
-			PersonDTO personDTO = (PersonDTO)session.getAttribute("naver");
 			pw = personDTO.getPw();
 			token = personDTO.getToken();
 		}
@@ -73,7 +72,7 @@ public class MemberInsertService implements Action {
 				
 				con.commit();
 			}else{
-				PersonDTO personDTO = new PersonDTO();
+				personDTO = new PersonDTO();
 				PersonDAO personDAO = new PersonDAO();
 				
 				personDTO.setNickName(request.getParameter("nickname"));

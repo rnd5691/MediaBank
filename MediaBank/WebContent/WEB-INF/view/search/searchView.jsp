@@ -86,8 +86,8 @@
 						<button class="btn btn-default">결제하기</button>
 					</c:if>
 					<c:if test="${!empty sessionScope.member and !empty requestScope.buyCheck}">
-						<input id="down" type="button" class="btn btn-default" value="다운로드">
-					</c:if>
+ 						<input id="down" type="button" class="btn btn-default" value="다운로드">
+ 					</c:if>
 					<c:if test="${empty sessionScope.member }">
 						<textarea readonly="readonly">로그인 후에 다운로드 가능합니다.</textarea>
 					</c:if>
