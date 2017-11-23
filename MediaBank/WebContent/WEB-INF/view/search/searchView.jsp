@@ -11,6 +11,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="../css/header.css" rel="stylesheet">
 <link href="../css/search/searchView.css" rel="stylesheet">
+<script type="text/javascript">
+	$(function(){
+		$("#down").click(function(){
+			$("#frm").prop("action", "../payment/paymentDown.payment");
+			$("#frm").submit();
+		});
+	});
+</script>
 </head>
 <body>
 <!-- header start -->
@@ -27,7 +35,7 @@
 	<div class="title">
 		<h1>${requestScope.work.work}</h1>
 	</div>
-	<form action="payment.search" method="post">
+	<form action="payment.search" method="post" id="frm">
 		<input type="hidden" name="work_seq" value="${requestScope.work.work_seq}">
 		<table class="table">
 			<tr>
@@ -74,8 +82,11 @@
 			</tr>
 			<tr>
 				<td class="download"colspan="4">
-					<c:if test="${!empty sessionScope.member }">
+					<c:if test="${!empty sessionScope.member and empty requestScope.buyCheck}">
 						<button class="btn btn-default">결제하기</button>
+					</c:if>
+					<c:if test="${!empty sessionScope.member and !empty requestScope.buyCheck}">
+						<input id="down" type="button" class="btn btn-default" value="다운로드">
 					</c:if>
 					<c:if test="${empty sessionScope.member }">
 						<textarea readonly="readonly">로그인 후에 다운로드 가능합니다.</textarea>

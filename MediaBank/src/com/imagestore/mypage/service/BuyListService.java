@@ -11,6 +11,8 @@ import com.imagestore.action.Action;
 import com.imagestore.action.ActionFoward;
 import com.imagestore.buy.BuyDAO;
 import com.imagestore.buy.BuyDTO;
+import com.imagestore.file.FileDAO;
+import com.imagestore.file.FileDTO;
 import com.imagestore.member.MemberDTO;
 import com.imagestore.util.PageMaker;
 
@@ -29,20 +31,23 @@ public class BuyListService implements Action {
 		}catch(Exception e){
 			curPage=1;
 		}
+		int totalCount =0;
 		
-		int totalCount = 0;
-		
-		int user_num = Integer.parseInt(request.getParameter("user_num"));
-		
-		
-		try{
+		try {
+			
 			totalCount = buyDAO.getTotalCount(memberDTO.getUser_num());
 			PageMaker pageMaker = new PageMaker(curPage, totalCount);
-			List<BuyDTO> ar = buyDAO.selectList(memberDTO.getKind(), user_num, pageMaker.getMakeRow());
+			List<BuyDTO> ar = buyDAO.selectList(memberDTO.getUser_num(), pageMaker.getMakeRow());
+			FileDAO fileDAO = new FileDAO();
+			List<FileDTO> file = null;
+			for(int i=0; i<ar.size(); i++) {
+				file = fileDAO.selectWorkSeq(ar.get(i).getFile_num());
+			}
 			
 			request.setAttribute("list", ar);
 			request.setAttribute("makePage", pageMaker.getMakePage());
-		}catch(Exception e){
+			request.setAttribute("file", file);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

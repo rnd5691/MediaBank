@@ -60,4 +60,28 @@
     <servlet-name>Search</servlet-name>
     <url-pattern>*.search</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>Amateur</servlet-name>
+  	<servlet-class>com.imagestore.control.SearchController</servlet-class>
+  		<init-param>
+  			<param-name>properties</param-name>
+  			<param-value>amateur.properties</param-value>
+  		</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Amateur</servlet-name>
+  	<url-pattern>*.amateur</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>Payment</servlet-name>
+  	<servlet-class>com.imagestore.control.SearchController</servlet-class>
+  		<init-param>
+  			<param-name>properties</param-name>
+  			<param-value>payment.properties</param-value>
+  		</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Payment</servlet-name>
+  	<url-pattern>*.payment</url-pattern>
+  </servlet-mapping>
 </web-app>

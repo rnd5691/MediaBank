@@ -1,75 +1,93 @@
-@charset "UTF-8";
-
-html, body	{
-	height: 100%;
+* {
+    box-sizing: border-box;
 }
 
-.allbody	{
-	
-	width:100%;
-	height: auto;
-	min-height: 100%;
+body {
+    font-family: Arial;
 }
-
-.amatitle	{
+.body{
 	width: 1200px;
-	height: auto;
-	margin: 0 auto;
-	color: #83b14e;
-	border-bottom: 1px solid #747474;
+    padding: 50px;
+    margin: 0 auto;
+    min-height: 100%;
+    background-color: #f1f1f1;
 }
 
-h1	{
-	display: inline-block;
+/* Center website */
+.main {
+    max-width: 1000px;
+    margin: auto;
 }
 
-h4	{
-	display: inline-block;
+h1 {
+    font-size: 50px;
+    word-break: break-all;
 }
 
-.amasearch	{
-	margin-top: 50px;
-	margin-left: 220px;
+.row {
+    margin: 10px -16px;
 }
 
-.amasearch > input	{
-	height: 34px;
+/* Add padding BETWEEN each column */
+.row,
+.row > .column {
+    padding: 8px;
 }
 
-.amacontainer	{
-	margin-top: 50px;
+/* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 33.33%;
+    display: none; /* Hide all elements by default */
 }
 
-.piece	{
-	width: 250px;
-	height: 250px;
-	border: 1px solid black;
-	margin-right: 48px;
-	margin-top: 30px;
+/* Clear floats after rows */ 
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
-.tdtable1	{
-	padding-top: 15px;
-	padding-left: 15px;
-	
+/* Content */
+.content {
+    background-color: white;
+    padding: 10px;
+}
+.content img {
+	width: 269px;
+	height: 201px;
 }
 
-#tdtable1	{
-	margin-left: 15px;
+/* The "show" class is added to the filtered elements */
+.show {
+  display: block;
+}
+/* 검색창 */
+.input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    width: 500px;
 }
 
-.table1	{
-	margin-bottom: 20px;
+.sel {
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
 }
-
-.select	{
-	height: 34px;
+.nav-tabs {
+    border-bottom: 1px solid #ddd;
+    padding-top: 20px;
 }
-
-#table2	{
-	margin-bottom: 80px;
+.content video {
+	height: 180px;
 }
-
-#table3	{
-	margin-bottom: 80px;
+.header_font {
+	color:#83b14e;
+    margin-top: 30px;
+}
+.container {
+	min-width: 1000px;
+	width:1000px;
+	padding: 0px;
 }

@@ -8,7 +8,7 @@
 				<li>이미지</li>
 				<li>동영상</li>
 				<li><a href="${pageContext.request.contextPath}/qna/qnaList.qna">Q&A</a></li>
-				<li>무명작가</li>
+				<li><a href="${pageContext.request.contextPath}/amateur/amateur.amateur">무명작가</a></li>
 			</ul>
 			<a href="${pageContext.request.contextPath}/index.jsp"><img class="logo" align="middle" alt="logo" src="${pageContext.request.contextPath}/images/logo.png"></a>
 			<ul class="header_join">
@@ -31,7 +31,6 @@
 				</c:choose>
 			</ul>
 		</div>
-		
 	</header>
 	<!-- Modal -->
 					  <div class="modal fade" id="myModal" role="dialog">

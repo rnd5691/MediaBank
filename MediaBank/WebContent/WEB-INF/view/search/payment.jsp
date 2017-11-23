@@ -38,7 +38,7 @@
 		        msg += '이름 : '+'${requestScope.name}';
 		    }
 		    alert(msg);
-		    location.href = "../index.jsp";
+		    location.href = "../mypage/buyInsert.mypage?work_seq="+${requestScope.work.work_seq};
 		});
 	});
 </script>

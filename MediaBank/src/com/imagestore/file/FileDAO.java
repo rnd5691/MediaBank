@@ -9,9 +9,50 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.imagestore.member.MemberDAO;
 import com.imagestore.util.DBConnector;
 
 public class FileDAO {
+	//구매목록 뷰페이지를 위한 work_seq 받아오기
+		public List<FileDTO> selectWorkSeq (int file_num) throws Exception {
+			Connection con = DBConnector.getConnect();
+			String sql = "SELECT work_seq FROM file_table WHERE file_num=?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, file_num);
+			ResultSet rs = st.executeQuery();
+			FileDTO fileDTO = null;
+			List<FileDTO> ar = new ArrayList<>();
+			while(rs.next()) {
+				fileDTO = new FileDTO();
+				fileDTO.setWork_seq(rs.getInt("work_seq"));
+				ar.add(fileDTO);
+			}
+			DBConnector.disConnect(rs, st, con);
+			return ar;
+		}
+	
+	//file_table or work_table의 작품명, 닉네임, 파일이름, 파일종류를 가져와
+	public List<FileDTO> fnWInfo() throws Exception{
+		Connection con = DBConnector.getConnect();
+		String sql = "select DISTINCT w.*, f.file_name, f.file_kind, f.file_num from work_info w, file_table f where w.work_seq=f.work_seq ORDER BY f.FILE_NUM desc";
+		PreparedStatement st = con.prepareStatement(sql);
+		ResultSet rs = st.executeQuery();
+		List<FileDTO> ar = new ArrayList<>();
+		MemberDAO memberDAO = new MemberDAO();
+		FileDTO fileDTO = null;
+		while(rs.next()){
+			fileDTO = new FileDTO();
+			fileDTO.setFile_name(rs.getString("file_name"));
+			fileDTO.setFile_kind(rs.getString("file_kind"));
+			fileDTO.setWork(rs.getString("work"));
+			fileDTO.setNickname(memberDAO.searchKind(rs.getInt("user_num")));
+			fileDTO.setFile_num(rs.getInt("file_num"));
+			ar.add(fileDTO);
+		}
+		DBConnector.disConnect(rs, st, con);
+		return ar;
+	}
+	
 	//현재 판매 중인 내 작품 에 쓰이는 토탈메소드
 	public int getTotalCount(int user_num, String file_kind) throws Exception	{
 		Connection con = DBConnector.getConnect();

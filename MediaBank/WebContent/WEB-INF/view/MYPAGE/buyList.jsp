@@ -16,6 +16,11 @@
 	$(function(){
 		$("#buyList").css('color', 'white');
 		$("#buyList").css('background-color', '#83b14e');
+		
+		$(".down").click(function(){
+			$("#frm").prop("action", "../payment/paymentDown.payment");
+			$("#frm").submit(); 
+		});
 	});
 </script>
 </head>
@@ -33,9 +38,9 @@
 		<div class="title">
 			<h1>My Page</h1>&nbsp;&nbsp;<h5>구매 목록</h5>
 		</div>
-		<input type="hidden" id="user_num" name="user_num" value="${sessionScope.member.user_num}">
-		
 		<div>
+		<form id="frm" method="post">
+		<input type="hidden" id="user_num" name="user_num" value="${sessionScope.member.user_num}">
 			<table class="table table-hover">
 					<tr class="table-title">
 						<td>번호</td>
@@ -43,17 +48,22 @@
 						<td>작가명</td>
 						<td>구매금액</td>
 						<td>구매일자</td>
+						<td>다운로드</td>
 					</tr>
+						
 					<c:forEach items="${requestScope.list}" var="dto">
+					<input type="hidden" value="${dto.file_num }" name="file_num">
 						<tr>
 							<td>${dto.buy_seq}</td>
-							<td>${dto.work}</td>
+							<td><a href="../search/searchView.search?work_seq=${dto.work_seq}">${dto.work}</a></td>
 							<td>${dto.nickname}</td>
 							<td>${dto.price}</td>
 							<td>${dto.buy_date}</td>
+							<td><button class="down" name="work_seq" value="${dto.work_seq}">다운로드</button></td>
 						</tr>
 					</c:forEach>
 				</table>
+			</form>
 				<c:if test="${makePage.totalPage > 0}">
 					<div class="paging">
 						<ul class="pagination">

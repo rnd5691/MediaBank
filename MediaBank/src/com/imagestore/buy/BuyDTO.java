@@ -2,7 +2,9 @@ package com.imagestore.buy;
 
 import java.sql.Date;
 
-public class BuyDTO {
+import com.imagestore.file.FileDTO;
+
+public class BuyDTO extends FileDTO {
 	private int buy_seq;//순서3
 	private int user_num;//회원번호
 	private String nickname;//작가명
