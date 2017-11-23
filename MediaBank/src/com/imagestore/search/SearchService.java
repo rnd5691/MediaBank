@@ -48,6 +48,10 @@ public class SearchService implements Action {
 						fileName.add(fileDTO);
 					}
 				}
+				
+				if(search=="" && fileDTO.getFile_kind().equals(select)) {
+					fileName.add(fileDTO);
+				}
 			}
 			
 		} catch (Exception e) {

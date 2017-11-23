@@ -43,46 +43,95 @@ public class BuyInsertService implements Action {
 			Connection con = null;
 			int result = 0;
 			String name = null;
+			boolean check;
 			try {
-				con = DBConnector.getConnect();
-				con.setAutoCommit(false);
-				WorkDTO workDTO = workDAO.selectOne(work_seq, con);
-				BuyDTO buyDTO = buyDAO.selectBuyOne(work_seq, con);
-				MemberDAO memberDAO = new MemberDAO();
-				try{
-					name = memberDAO.searchNickName(memberDTO.getUser_num(), memberDTO.getKind());
-				}catch(Exception e){
-					e.printStackTrace();
-				}
+				check = buyDAO.downCheck(memberDTO.getUser_num(), work_seq);
+				System.out.println(check);
+				if(check==true) {
+					workDAO.downloadHitUpdate(work_seq);
+					try {
+						con = DBConnector.getConnect();
+						con.setAutoCommit(false);
+						WorkDTO workDTO = workDAO.selectOne(work_seq, con);
+						BuyDTO buyDTO = buyDAO.selectBuyOne(work_seq, con);
+						MemberDAO memberDAO = new MemberDAO();
+						try{
+							name = memberDAO.searchNickName(memberDTO.getUser_num(), memberDTO.getKind());
+						}catch(Exception e){
+							e.printStackTrace();
+						}
+						
+						buyDTO.setUser_num(memberDTO.getUser_num());
+						buyDTO.setNickname(name);
+						buyDTO.setWork_seq(work_seq);
+						buyDTO.setPrice(workDTO.getPrice());
+						
+						result = buyDAO.insert(buyDTO, con);
+						con.commit();
+						if(result>0) {
+							actionFoward.setCheck(true);
+							request.setAttribute("message", "결제가 완료되었습니다");
+							request.setAttribute("path", "../search/searchView.search?work_seq="+work_seq+"&file_num="+buyDTO.getFile_num());
+							actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+						} else {
+							actionFoward.setCheck(true);
+							request.setAttribute("message", "SYSYEM : 결제에 실패하였습니다");
+							request.setAttribute("path", "../search/searchView.search?work_seq="+work_seq);
+							actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						con.rollback();
+					} finally {
+						con.setAutoCommit(true);
+						con.close();
+					}
 				
-				buyDTO.setUser_num(memberDTO.getUser_num());
-				buyDTO.setNickname(name);
-				buyDTO.setWork_seq(work_seq);
-				buyDTO.setPrice(workDTO.getPrice());
-				
-				result = buyDAO.insert(buyDTO, con);
-				con.commit();
-				if(result>0) {
-					actionFoward.setCheck(true);
-					request.setAttribute("message", "결제가 완료되었습니다");
-					request.setAttribute("path", "../search/searchView.search?work_seq="+work_seq+"&file_num="+buyDTO.getFile_num());
-					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
 				} else {
-					actionFoward.setCheck(true);
-					request.setAttribute("message", "SYSYEM : 결제에 실패하였습니다");
-					request.setAttribute("path", "../search/searchView.search?work_seq="+work_seq);
-					actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+					try {
+						con = DBConnector.getConnect();
+						con.setAutoCommit(false);
+						WorkDTO workDTO = workDAO.selectOne(work_seq, con);
+						BuyDTO buyDTO = buyDAO.selectBuyOne(work_seq, con);
+						MemberDAO memberDAO = new MemberDAO();
+						try{
+							name = memberDAO.searchNickName(memberDTO.getUser_num(), memberDTO.getKind());
+						}catch(Exception e){
+							e.printStackTrace();
+						}
+						
+						buyDTO.setUser_num(memberDTO.getUser_num());
+						buyDTO.setNickname(name);
+						buyDTO.setWork_seq(work_seq);
+						buyDTO.setPrice(workDTO.getPrice());
+						
+						result = buyDAO.insert(buyDTO, con);
+						con.commit();
+						if(result>0) {
+							actionFoward.setCheck(true);
+							request.setAttribute("message", "결제가 완료되었습니다");
+							request.setAttribute("path", "../search/searchView.search?work_seq="+work_seq+"&file_num="+buyDTO.getFile_num());
+							actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+						} else {
+							actionFoward.setCheck(true);
+							request.setAttribute("message", "SYSYEM : 결제에 실패하였습니다");
+							request.setAttribute("path", "../search/searchView.search?work_seq="+work_seq);
+							actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						con.rollback();
+					} finally {
+						con.setAutoCommit(true);
+						con.close();
+					}
+					workDAO.downloadHitUpdate(work_seq);
 				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
-				con.rollback();
-			} finally {
-				con.setAutoCommit(true);
-				con.close();
 			}
 		}
-		
 		return actionFoward;
-	}
-
+}
 }

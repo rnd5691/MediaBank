@@ -19,6 +19,8 @@
 	    display: inline-block;
     	vertical-align: baseline;
     	margin: 2px;
+    	width: 375px;
+    	height: 300px;
 	}
 	.item img:hover {
 		opacity: 1;

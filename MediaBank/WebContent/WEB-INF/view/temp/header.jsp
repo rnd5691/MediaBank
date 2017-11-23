@@ -5,8 +5,8 @@
 	<header>
 		<div class="header_wrap">
 			<ul class="header_menu">
-				<li>이미지</li>
-				<li>동영상</li>
+				<li><a href="${pageContext.request.contextPath}/search/searchList.search?search=&kind=true&perPage=1&check=false&select=image">이미지</a></li>
+				<li><a href="${pageContext.request.contextPath}/search/searchList.search?search=&kind=true&perPage=1&check=false&select=video">동영상</a></li>
 				<li><a href="${pageContext.request.contextPath}/qna/qnaList.qna">Q&A</a></li>
 				<li><a href="${pageContext.request.contextPath}/amateur/amateur.amateur">무명작가</a></li>
 			</ul>

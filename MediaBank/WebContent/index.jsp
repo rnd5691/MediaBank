@@ -46,14 +46,14 @@ $(function() {
 	
 	 $('.searh_main').slick({
 		  slidesToShow: 1,
-		  slidesToScroll: 1,
+		  slidesToScroll: 4,
 		  arrows: false,
 		  fade: true,
 		  asNavFor: '.multiple-items'
 		});
 		$('.multiple-items').slick({
 		  slidesToShow: 3,
-		  slidesToScroll: 1,
+		  slidesToScroll: 4,
 		  asNavFor: '.searh_main',
 		  dots: true,
 		  centerMode: true,
@@ -121,6 +121,9 @@ $(function() {
 		<div class="pic"><img id="slide${i}"></div>
 		</c:forEach>
 	</div>
+</div>
+<div class="info_sarp">
+	
 </div>
 <!-- 무명작가 슬라이더 끝 -->
 <!-- contents finish -->

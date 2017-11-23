@@ -19,7 +19,7 @@
 <link href="../css/index.css" rel="stylesheet">
 <link href="../css/header.css" rel="stylesheet">
 <link href="../css/search/searchList.css" rel="stylesheet">
-<title>Insert title here</title>
+<title>Media Bank Search</title>
 
 <script>
 	$(function() {
@@ -142,8 +142,8 @@
 		</div>
 		
 		<div class="container">
-  <h2>Dynamic Tabs</h2>
-  <p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
+  <h2>당신이 원하는 많은 컨텐츠</h2>
+  <p>Media Bank의 엄선된 컬렉션에서 영감을 받으세요.</p>
 
   <ul class="nav nav-tabs">
     <li id="tab1" class="active"><a id="tab1-menu" data-toggle="tab" href="#home">아마추어 작가</a></li>

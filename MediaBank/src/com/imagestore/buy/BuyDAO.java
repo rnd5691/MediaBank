@@ -14,6 +14,22 @@ import com.imagestore.work.WorkDTO;
 
 public class BuyDAO {
 	
+	//다운로드 했는지 확인용
+		public boolean downCheck(int user_num, int work_seq) throws Exception {
+			Connection con = DBConnector.getConnect();
+			boolean check = false;
+			String sql = "SELECT work_seq FROM buy_info WHERE user_num=? and work_seq=? ";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, user_num);
+			st.setInt(2, work_seq);
+			ResultSet rs = st.executeQuery();
+			if(rs.next()) {
+				check = true;
+			}
+			DBConnector.disConnect(rs, st, con);
+			return check;
+		}
+	
 	//구매목록 work 가져오기
 	public List<BuyDTO> buyWork(int user_num) throws Exception {
 		Connection con = DBConnector.getConnect();

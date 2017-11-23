@@ -12,6 +12,17 @@ import com.imagestore.util.DBConnector;
 import com.imagestore.util.MakeRow;
 
 public class WorkDAO {
+
+	//다운로드히트 업데이트 
+		public void downloadHitUpdate(int work_seq) throws Exception {
+			Connection con = DBConnector.getConnect();
+			String sql = "UPDATE WORK_INFO SET DOWNLOAD_HIT=DOWNLOAD_HIT+1 WHERE work_seq=?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, work_seq);
+			st.executeUpdate();
+			DBConnector.disConnect(st, con);
+		}
+		
 	//관리자 승인,거부 난 작품들 리스트 가져오기
 	public boolean adminCheck(int work_seq) throws Exception{
 		Connection con = DBConnector.getConnect();
