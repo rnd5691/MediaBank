@@ -104,7 +104,7 @@ $(function(){
          	</tr>
 			<tr>
 				<td>작품명</td>
-				<td><input id="work"class="border" name="work" type="text" value="${requestScope.work.work}"></td>
+				<td><input id="work"class="border" name="work" type="text" required="${requestScope.work.work}"></td>
 			</tr>
 			<tr>
 				<td>승인현황</td>
@@ -120,11 +120,11 @@ $(function(){
 			</tr>
 			<tr>
 				<td>가격</td>
-				<td><input id="price" class="border" name="price" type="text" value="${requestScope.work.price}"></td>
+				<td><input id="price" class="border" required="required" name="price" type="text" value="${requestScope.work.price}"></td>
 			</tr>
 			<tr>
 				<td>파일 업로드</td>
-				<td><input type="file" id="file" name="file"></td>
+				<td><input type="file" required="required" id="file" name="file"></td>
 			</tr>
 			<c:if test="${requestScope.file.file_kind eq 'image'}">
 		         <tr>
@@ -134,11 +134,11 @@ $(function(){
 	     	</c:if>
 			<tr>
 				<td>상세 내용</td>
-				<td><textarea id="contents" class="border" name="contents">${requestScope.work.contents}</textarea></td>
+				<td><textarea id="contents" required="required" class="border" name="contents">${requestScope.work.contents}</textarea></td>
 			</tr>
 			<tr>
 				<td>태그</td>
-				<td><textarea id="tag" class="border" name="tag">${requestScope.work.tag}</textarea></td>
+				<td><textarea id="tag" required="required" class="border" name="tag">${requestScope.work.tag}</textarea></td>
 			</tr>
 		</table>
 		<c:if test="${!empty requestScope.work.reply}">
@@ -146,7 +146,8 @@ $(function(){
 				<textarea name="reply" readonly="readonly">${requestScope.work.reply }</textarea>
 			</div>		
 		</c:if>
-		<input type="button" id="update" class="bloat btn btn-default" value="UPDATE">
+		<button id="update" class="bloat btn btn-default">UPDATE</button>
+		<!-- <input type="button" id="update" class="bloat btn btn-default" value="UPDATE"> -->
 		
 	</form>
 </div>

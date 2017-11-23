@@ -40,8 +40,6 @@
 		$("#btn").click(function(){
 			if(check==false){
 				alert("업로드용량이 초과 되었습니다");
-			} else {
-				$("#frm").submit();
 			}
 		});
 	});
@@ -89,7 +87,8 @@
 				</tr>
 			</table>
 			<div class="button">
-				<input type="button" id="btn" class="btn btn-default" value="등록">
+				<button id="btn" class="btn btn-default">등록</button>
+				<!-- <input type="button" id="btn" class="btn btn-default" value="등록"> -->
 			</div>
 		</form>
 	</div>

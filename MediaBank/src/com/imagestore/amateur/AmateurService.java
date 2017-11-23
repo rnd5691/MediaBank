@@ -71,8 +71,6 @@ public class AmateurService implements Action {
 				 }
 			 } else if(select.equals("nickname")) {
 				 ar = workDAO.artistSearch(kind, select, search,pageMaker.getMakeRow());
-			 } else {
-				 System.out.println("아무것도 안들어왔대");
 			 }
 			 
 		 

@@ -78,10 +78,6 @@ h4	{
 	float: right;
 }
 
-.pagination > a	{
-	vertical-align: center;
-}
-
 .tab-content	{
 	width: 700px;
 }
@@ -114,4 +110,17 @@ h4	{
 }
 #button{
 	float : right;
+}
+video::-internal-media-controls-download-button {
+        display:none;
+}
+video::-webkit-media-controls {
+        overflow: hidden;
+}
+video::-webkit-media-controls-enclosure {
+        width: calc(100% + 32px);
+        margin-left: auto;
+}
+.paging{
+	text-align: center;
 }

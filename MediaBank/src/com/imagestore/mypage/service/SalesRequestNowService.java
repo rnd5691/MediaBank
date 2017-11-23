@@ -8,7 +8,9 @@ import javax.servlet.http.HttpSession;
 
 import com.imagestore.action.Action;
 import com.imagestore.action.ActionFoward;
+import com.imagestore.file.FileDAO;
 import com.imagestore.member.MemberDTO;
+import com.imagestore.util.salesPageMaker;
 
 public class SalesRequestNowService implements Action {
 
@@ -24,13 +26,27 @@ public class SalesRequestNowService implements Action {
 			actionFoward.setCheck(true);
 		}else {
 			String file_kind = "";
+			int curPage = 1;
+			try{
+				curPage = Integer.parseInt(request.getParameter("curPage") == null?"1":request.getParameter("curPage"));
+			}catch(Exception e){
+				curPage=1;
+			}
+			int totalCount = 0;
+			
 			try {
+				FileDAO fileDAO = new FileDAO();
 				file_kind = request.getParameter("file_kind") == null?"image":request.getParameter("file_kind");
+				totalCount = fileDAO.getTotalCount(memberDTO.getUser_num(), file_kind);
+				salesPageMaker pageMaker = new salesPageMaker(curPage, totalCount);
+				session.setAttribute("makePage", pageMaker.getMakePage());
+				session.setAttribute("makeRow", pageMaker.getMakeRow());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
 			request.setAttribute("file_kind", file_kind);
+			
 			actionFoward.setCheck(true);
 			actionFoward.setPath("../WEB-INF/view/MYPAGE/salesRequestNow.jsp");
 		}

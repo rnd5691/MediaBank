@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.imagestore.member.MemberDAO;
 import com.imagestore.util.DBConnector;
+import com.imagestore.util.MakeRow;
 
 public class FileDAO {
 	//전체 작품 번호 가져오기
@@ -75,10 +76,12 @@ public class FileDAO {
 		//현재 판매 중인 내 작품 에 쓰이는 토탈메소드
 		public int getTotalCount(int user_num, String file_kind) throws Exception	{
 			Connection con = DBConnector.getConnect();
-			String sql = "select count(*) from file_table f, work_info w where f.work_seq=w.work_seq and f.file_kind=?";
+			String sql = "select nvl(count(f.work_seq), 0) from file_table f, work_info w where f.work_seq=w.work_seq and w.user_num=? and w.upload_check='승인' and f.file_kind=?";
 			PreparedStatement st = con.prepareStatement(sql);
 					
-			st.setString(1, file_kind);
+			st.setInt(1, user_num);
+			st.setString(2, file_kind);
+			
 			ResultSet rs = st.executeQuery();
 			rs.next();
 					
@@ -88,14 +91,17 @@ public class FileDAO {
 			return result;
 		}
 			
-		//현재 판매중인 내 작품 이미지 조회 메소드
-		public List<FileDTO> selectNow(int user_num, String file_kind) throws Exception	{
+		//현재 판매중인 내 작품 조회 메소드
+		public List<FileDTO> selectNow(int user_num, String file_kind, MakeRow makeRow) throws Exception	{
 			Connection con = DBConnector.getConnect();
-			String sql = "select f.file_num, f.work_seq, f.file_name,f.file_kind, w.user_num, w.sell from work_info w, file_table f where f.work_seq=w.work_seq and user_num=? and w.upload_check='승인' and file_kind='image'";
+			String sql = "select * from (select rownum R, I.* from (select f.file_num, f.work_seq, f.file_name, f.file_kind, w.user_num, w.sell, w.upload_check from work_info w, file_table f where f.work_seq=w.work_seq and user_num=? and w.upload_check='승인' and file_kind=?) I) where R between ? and ?";
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setInt(1, user_num);
-					
+			st.setString(2, file_kind);
+			st.setInt(3, makeRow.getStartRow());
+			st.setInt(4, makeRow.getLastRow());
 			ResultSet rs = st.executeQuery();
+			
 			List<FileDTO> ar = new ArrayList<>();
 			FileDTO fileDTO = null;
 			while(rs.next())	{
@@ -113,7 +119,7 @@ public class FileDAO {
 		}
 			
 			//현재 판매중인 내 작품 비디오 조회 메소드
-			public List<FileDTO> selectNow2(int user_num, String file_kind) throws Exception	{
+			/*public List<FileDTO> selectNow2(int user_num, String file_kind) throws Exception	{
 			Connection con = DBConnector.getConnect();
 			String sql = "select f.file_num, f.work_seq, f.file_name,f.file_kind, w.user_num, w.sell from work_info w, file_table f where f.work_seq=w.work_seq and w.user_num=? and w.upload_check='승인' and f.file_kind='video'";
 			PreparedStatement st = con.prepareStatement(sql);
@@ -137,7 +143,7 @@ public class FileDAO {
 			
 			DBConnector.disConnect(rs, st, con);
 			return ar1;
-			}
+			}*/
 				
 		//salesReuqestViewDelete
 		public void salesRequestViewDelete(int work_seq, Connection con) throws Exception {

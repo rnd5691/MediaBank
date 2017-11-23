@@ -20,6 +20,7 @@
 		//업데이트
 		$("#viewUpdate").click(function(){
 			$("#frm").prop("action", "mypageSalesRequestViewUpdate.mypage");
+			$("#frm").prop("method", "GET");
 			$("#frm").submit();
 		});
 		//삭제
@@ -45,7 +46,7 @@
 	<div class="title">
 		<h1>My Page</h1>&nbsp;&nbsp;<h5>내 작품 판매승인 요청</h5>
 	</div>
-	<form method="get" id="frm">
+	<form method="post" id="frm">
 		<input type="hidden" name="work_seq" value="${requestScope.work.work_seq}">
 		<input type="hidden" name="file_kind" value="${requestScope.file.file_kind}">
 		<table class="table">
@@ -63,7 +64,7 @@
          	</tr>
 			<tr>
 				<td>작품명</td>
-				<td><input name="work" type="text" readonly="readonly" value="${requestScope.work.work}"></td>
+				<td><input id="work" name="work" type="text" readonly="readonly" value="${requestScope.work.work}"></td>
 			</tr>
 			<tr>
 				<td>승인현황</td>

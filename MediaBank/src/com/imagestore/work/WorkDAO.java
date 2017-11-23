@@ -12,6 +12,27 @@ import com.imagestore.util.DBConnector;
 import com.imagestore.util.MakeRow;
 
 public class WorkDAO {
+	//관리자 승인,거부 난 작품들 리스트 가져오기
+	public boolean adminCheck(int work_seq) throws Exception{
+		Connection con = DBConnector.getConnect();
+		String sql = "select upload_check from work_info where work_seq=?";
+		PreparedStatement st = con.prepareStatement(sql);
+		
+		st.setInt(1, work_seq);
+		
+		ResultSet rs = st.executeQuery();
+		boolean check = true;
+		if(rs.next()){
+			if(rs.getString("upload_check").equals("대기중")){
+				check = true;
+			}else{
+				check = false;
+			}
+		}
+		DBConnector.disConnect(rs, st, con);
+		
+		return check;
+	}
 	//무명작가용 토탈카운트 이미지용
 		public int artistGetTotalCountImgString (String select, String search) throws Exception	{
 			Connection con = DBConnector.getConnect();

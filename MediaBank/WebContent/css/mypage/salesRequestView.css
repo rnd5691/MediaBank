@@ -33,6 +33,9 @@ td>textarea, div>textarea{
 	float: right;
 	margin-left: 5px;
 }
+#work{
+	width : 100%;
+}
 video::-internal-media-controls-download-button {
         display:none;
 }

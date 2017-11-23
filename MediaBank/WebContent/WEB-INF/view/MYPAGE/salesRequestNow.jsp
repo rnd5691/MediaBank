@@ -73,39 +73,21 @@ $(function(){
 		</div>
 		<div class="imagebody">
 			<input type="hidden" id="file_kind" name="file_kind">
-		<div class="container">
-		  <ul class="nav nav-tabs">
-	    	<li id="li_image" class="active"><a data-toggle="tab" href="#image" onclick="fn_tabClick('sajin')">이미지</a></li>
-	    	<li id="li_video"><a data-toggle="tab" href="#video" onclick="fn_tabClick('youngsang')">동영상</a></li>
-	    </ul>
-		<div class="tab-content">
-		<div id="${file_kind}" class="tab-pane fade in active">
-	    </div>
-	    <c:if test="${makePage.totalPage>0 }">
-	    	<button id="button" class="btn btn-default">저장</button>	
-	    </c:if>
-	  </div>
-	</div>
-			
-	<c:if test="${makePage.totalPage>0 }">
-		<div class="paging">
-			<ul class="pagination">
-				<c:if test="${makePage.curBlock>1}">
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=1&user_num=${member.user_num}&file_kind=${file_kind}">&lt;&lt;</a></li>
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.startNum-1}&user_num=${member.user_num}&file_kind=${file_kind}">[이전]</a></li>
-				</c:if>
-				<c:forEach begin="${makePage.startNum}" end="${makePage.lastNum}" var="i">
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${i}&user_num=${member.user_num}&file_kind=${file_kind}">${i}</a></li>
-				</c:forEach>
-				<c:if test="${makePage.curBlock<makePage.totalBlock}">
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.lastNum+1}&user_num=${member.user_num}&file_kind=${file_kind}">[다음]</a></li>
-					<li><a href="./mypageSalesRequestNow.mypage?curPage=${makePage.totalPage}&user_num=${member.user_num}&file_kind=${file_kind}">&gt;&gt;</a></li>
-				</c:if>
-			</ul>
-		</div>
-	</c:if>
+			<div class="container">
+		  		<ul class="nav nav-tabs">
+	    			<li id="li_image" class="active"><a data-toggle="tab" href="#image" onclick="fn_tabClick('sajin')">이미지</a></li>
+	    			<li id="li_video"><a data-toggle="tab" href="#video" onclick="fn_tabClick('youngsang')">동영상</a></li>
+	    		</ul>
+				<div class="tab-content">
+					<div id="${file_kind}" class="tab-pane fade in active">
+	   				</div>
+	    			<c:if test="${makePage.totalPage>0 }">
+	    				<button id="button" class="btn btn-default">저장</button>	
+	    			</c:if>
+	  			</div>
 			</div>
 		</div>
+	</div>
 </form>
 <div class="push"></div>
 </div>

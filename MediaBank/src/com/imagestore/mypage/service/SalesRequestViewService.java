@@ -30,32 +30,46 @@ public class SalesRequestViewService implements Action {
 		}else {
 			WorkDAO workDAO = new WorkDAO();
 			int work_seq = Integer.parseInt(request.getParameter("work_seq"));
-			
-			WorkDTO workDTO = null;
-			FileDTO fileDTO = null;
-			Connection con = null;
+			boolean check=true;
 			try{
-				con = DBConnector.getConnect();
-				con.setAutoCommit(false);
-				workDTO = workDAO.selectOne(work_seq, con);
-				FileDAO fileDAO = new FileDAO();
-				fileDTO = fileDAO.selectOne(work_seq, con);
-				con.commit();
+				check = workDAO.adminCheck(work_seq);				
 			}catch(Exception e){
 				e.printStackTrace();
-				con.rollback();
-			} finally {
-				con.setAutoCommit(true);
-				con.close();
 			}
-			request.setAttribute("file", fileDTO);
-			request.setAttribute("work", workDTO);
 			
-			if(memberDTO.getKind().equals("admin")){
-				actionFoward.setPath("../WEB-INF/view/admin/salesRequestView.jsp");
-			}else{			
-				actionFoward.setPath("../WEB-INF/view/MYPAGE/salesRequestView.jsp");
-			}		
+			if(check){
+				//대기중일때
+				WorkDTO workDTO = null;
+				FileDTO fileDTO = null;
+				Connection con = null;
+				try{
+					con = DBConnector.getConnect();
+					con.setAutoCommit(false);
+					workDTO = workDAO.selectOne(work_seq, con);
+					FileDAO fileDAO = new FileDAO();
+					fileDTO = fileDAO.selectOne(work_seq, con);
+					con.commit();
+				}catch(Exception e){
+					e.printStackTrace();
+					con.rollback();
+				} finally {
+					con.setAutoCommit(true);
+					con.close();
+				}
+				request.setAttribute("file", fileDTO);
+				request.setAttribute("work", workDTO);
+				
+				if(memberDTO.getKind().equals("admin")){
+					actionFoward.setPath("../WEB-INF/view/admin/salesRequestView.jsp");
+				}else{			
+					actionFoward.setPath("../WEB-INF/view/MYPAGE/salesRequestView.jsp");
+				}		
+			}else{
+				request.setAttribute("message", "이미 관리가 완료 된 작품 입니다.");
+				request.setAttribute("path", "mypageSalesRequestList.mypage");
+				actionFoward.setPath("../WEB-INF/view/common/result.jsp");
+			}
+			
 		}
 		actionFoward.setCheck(true);
 		

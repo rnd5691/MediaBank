@@ -31,7 +31,7 @@ public class AmateurVideoService implements Action {
 		} catch (Exception e) {
 			curPage= 1;
 		}
-		//HashMap<String, List<FileDTO>> map = null;
+		
 		try {
 			
 			kind = request.getParameter("kind");
@@ -51,7 +51,6 @@ public class AmateurVideoService implements Action {
 				totalCount = workDAO.artistGetTotalCountImgString(select, search);	
 			} else if (kind.equals("video")) {
 				totalCount = workDAO.artistGetTotalCountVideo(select, search);
-				System.out.println("여기들어옴");
 			}
 			 PageMaker pageMaker = new PageMaker(curPage,12,totalCount,6);
 				
@@ -72,12 +71,7 @@ public class AmateurVideoService implements Action {
 				 }
 			 } else if(select.equals("nickname")) {
 				 ar = workDAO.artistSearch(kind, select, search,pageMaker.getMakeRow());
-			 } else {
-				 System.out.println("아무것도 안들어왔대");
 			 }
-			 
-		 
-			 
 			 MakePage makePage = pageMaker.getMakePage();
 			 request.setAttribute("page", makePage);
 		} catch (Exception e) {
@@ -85,11 +79,6 @@ public class AmateurVideoService implements Action {
 			search = "";		
 			e.printStackTrace();
 		}
-		
-		System.out.println("search : "+search);
-		System.out.println("select : "+select);
-		System.out.println("kind   : "+kind);
-		
 		
 		request.setAttribute("select", select);
 		request.setAttribute("search", search);
